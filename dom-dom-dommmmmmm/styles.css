@@ -1,0 +1,30 @@
+.div-container {
+    display: flex;
+    flex-wrap: wrap;
+    font-size: 32px;
+}
+
+.square {
+    height: 5em;
+    width: 5em;
+    line-height: 5em;
+    text-align: center;
+    margin: 2px;
+    background-color: black;
+    color: rgb(255, 0, 0, 0);
+}
+
+.square:hover {
+    animation: appear 0.5s 1;
+    color: rgb(255, 0, 0, 1);
+}
+
+@keyframes appear {
+    0% {
+        color: rgb(255, 0, 0, 0);
+    }
+
+    100% {
+        color: rgb(255, 0, 0, 1);
+    }
+}
