@@ -1,0 +1,36 @@
+body {
+    background-color: rgb(60, 20, 204);
+    text-align: center;
+}
+
+/*
+Please note, I am definitely not a designer.
+Thank you for not judging too much.
+*/
+
+button {
+    padding: 1em;
+    border-radius: 5px;
+}
+
+h1 {
+    color: rgb(0, 131, 207);
+    background-color: rgb(66, 0, 173);
+    box-shadow: 21px 20px 34px -6px rgba(0, 0, 0, 0.75);
+    width: max-content;
+    padding: 0.5em 1em;
+    margin: 0.7em auto;
+    font-style: italic;
+    border-radius: 5px;
+}
+
+.friend {
+    background-color: rgb(6, 116, 143);
+    padding: 2em;
+    border-radius: 10px;
+    margin: 2em;
+}
+
+.friend>h3 {
+    text-transform: uppercase;
+}
