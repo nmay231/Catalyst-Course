@@ -1,0 +1,23 @@
+body {
+    margin: 1em;
+}
+
+form {
+    margin: 2em 1em;
+}
+
+div.colorShifter {
+    width: 15em;
+    height: 10em;
+    border: 3px black solid;
+    /*text-align: center;
+    line-height: 10em;*/
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+p {
+    width: 500px
+}
