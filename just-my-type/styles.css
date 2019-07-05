@@ -1,0 +1,70 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+#prompt-container {
+  font-family: Courier New, Courier, monospace;
+  font-size: 24px;
+  letter-spacing: 3px;
+}
+
+#yellow-block {
+  position: absolute;
+  margin-top: 4px;
+  width: 15px;
+  height: 25px;
+  background-color: yellow;
+}
+
+.keyboard-container {
+  margin-top: 230px;
+}
+
+#target-letter {
+  font-size: 38px;
+}
+
+.keys-row {
+  margin-top: -30px;
+  padding: 10px 0;
+}
+
+.key:not(.space-bar) {
+  display: inline-block;
+  width: 65px;
+}
+
+.space-bar {
+  margin-top: 20px;
+}
+
+#next-sentence {
+  font-style: italic;
+}
+
+#feedback {
+  font-size: 20px;
+}
+
+#end-game {
+  font-family: Courier New, Courier, monospace;
+  display: none;
+}
+
+.glyphicon {
+  font-size: 15px;
+  margin-right: -0.7px;
+}
+
+.glyphicon:first {
+  margin-left: 0px;
+}
+
+.glyphicon-ok {
+  color: #1DA237;
+}
+
+.glyphicon-remove {
+  color: #CD2626;
+}
