@@ -4,6 +4,7 @@
 }
 
 #prompt-container {
+  display: none;
   font-family: Courier New, Courier, monospace;
   font-size: 24px;
   letter-spacing: 3px;
@@ -39,12 +40,16 @@
   margin-top: 20px;
 }
 
-#next-sentence {
-  font-style: italic;
-}
-
 #feedback {
   font-size: 20px;
+}
+
+.glyphicon-ok {
+  color: #1DA237;
+}
+
+.glyphicon-remove {
+  color: #CD2626;
 }
 
 #end-game {
@@ -55,16 +60,4 @@
 .glyphicon {
   font-size: 15px;
   margin-right: -0.7px;
-}
-
-.glyphicon:first {
-  margin-left: 0px;
-}
-
-.glyphicon-ok {
-  color: #1DA237;
-}
-
-.glyphicon-remove {
-  color: #CD2626;
 }
