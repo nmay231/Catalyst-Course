@@ -32,7 +32,9 @@ function seriously(name, location, favFood) {
 }
 
 let arrrrrgs = ['Bartholomew', 'Subway', 'McChickens']
-seriously(...arrrrrgs); // Why does this semicolon have to be necessary?!?!
+seriously(...arrrrrgs)
+
+let meNotHaveSemicolons // This forces ASI to run the following code without errors
 
 (function (name) {
     let chars = [...name]
