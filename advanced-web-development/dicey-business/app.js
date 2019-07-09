@@ -18,7 +18,7 @@ class Die {
             '<div id="' + this.divId + '"></div>'
         )
         this.$div = $('#' + this.divId)
-        this.$div.addClass('dice text-center unselectable')
+        this.$div.addClass('dice text-center unselectable mb-2')
         this.$div.click(this.roll.bind(this))
         this.$div.dblclick(this.die.bind(this))
         this.roll()
