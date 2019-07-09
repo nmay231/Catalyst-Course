@@ -1,0 +1,46 @@
+.nav-link {
+    cursor: pointer;
+}
+
+#canvas {
+    height: 600px;
+    width: 600px;
+    background-color: rgb(116, 255, 243);
+}
+
+.shape {
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.7);
+    cursor: pointer;
+}
+
+.square {
+    height: 100px;
+    width: 100px;
+    margin: 300px;
+    background-color: rgba(255, 0, 0, 0.7);
+}
+
+.rectangle {
+    height: 75px;
+    width: 200px;
+    margin: 100px;
+    background-color: rgba(0, 128, 0, 0.7);
+}
+
+.circle {
+    height: 100px;
+    width: 100px;
+    margin: 200px;
+    background-color: rgba(128, 0, 128, 0.7);
+}
+
+.triangle {
+    height: 0px;
+    width: 0px;
+    border: 50px rgba(255, 255, 0, 0.7) solid;
+    border-top-color: transparent;
+    border-right-color: transparent;
+    margin: 400px;
+    background-color: transparent;
+}
