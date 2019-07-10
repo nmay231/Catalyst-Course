@@ -2,7 +2,7 @@ const GENERIC_SHAPE = 'generic'
 const SQUARE = 'square'
 const RECTANGLE = 'rectangle'
 const CIRCLE = 'circle'
-const TRIANGLE = 'traiangle'
+const TRIANGLE = 'triangle'
 
 const winHeight = 600
 const winWidth = 600
@@ -23,15 +23,34 @@ class Shape {
             'margin-top': Math.floor(Math.random() * (winHeight - height)),
         })
         $('#canvas').append(this.$div)
-        this.$div.on('click', removeSelf) // This makes the div dissappear
+        this.$div.click(shapeInfo(this.describe.bind(this)))
+        this.$div.dblclick(this.removeSelf.bind(this))
     }
 
-    describe() {}
+    describe() {
+        return {
+            type: this.type,
+            width: this.width,
+            height: this.height,
+            area: this.area,
+            perimeter: this.perimeter,
+            radius: this.radius,
+            circumference: this.circumference,
+        }
+    }
 
     removeSelf() {
-        alert()
         this.$div.remove()
+        shapeInfo(null, true)
         delete this
+    }
+
+    get area() {
+        return this.height * this.width
+    }
+
+    get perimeter() {
+        return 2 * this.height + 2 * this.width
     }
 }
 
@@ -53,10 +72,29 @@ class Rectangle extends Shape {
 }
 
 class Circle extends Shape {
-    constructor(divId, diameter) {
-        super(divId, diameter, diameter)
+    constructor(divId, radius) {
+        super(divId, radius * 2, radius * 2)
         this.type = CIRCLE
+        this.radius = radius
         this.$div.addClass('circle rounded-circle')
+    }
+
+    describe() {
+        // Ignore width and height attributes
+        return {
+            ...super.describe(),
+            height: undefined,
+            width: undefined,
+            perimeter: undefined, // Use circumference instead
+        }
+    }
+
+    get area() {
+        return Math.PI * this.radius ** 2
+    }
+
+    get circumference() {
+        return 2 * Math.PI * this.radius
     }
 }
 
@@ -81,76 +119,127 @@ class Triangle extends Shape {
         this.$div.css(Triangle.borders[direction], 'transparent')
         this.$div.css(Triangle.borders[(direction + 1) % 4], 'transparent')
     }
+
+    get area() {
+        return 0.5 * this.height ** 2
+    }
+
+    get perimeter() {
+        return (2 + 2 ** 0.5) * this.height
+    }
+}
+
+let genericShape = {
+    describe: () => ({
+        type: 'Generic Shape',
+        width: 100,
+        height: 20,
+        area: 2000,
+        perimeter: 240,
+        radius: undefined,
+        circumference: undefined,
+    })
+}
+
+function shapeInfo(describe) {
+    if (describe === null) {
+        describe = genericShape.describe.bind(genericShape)
+        callback()
+        return
+    }
+
+    function callback(e) {
+        let info = describe()
+        for (let attr in info) {
+            if (attr === 'type') {
+                $('#info-type').text(info.type)
+                $('#info-type').parent().show()
+            } else if (info[attr] !== undefined) {
+                $('#info-' + attr).text(Math.round(info[attr]))
+                $('#info-' + attr).parent().show()
+            } else {
+                $('#info-' + attr).parent().hide()
+            }
+        }
+    }
+    return callback
 }
 
 function shapesCreator() {
     let shapeType
     let index = 0
 
-    function createShape() {
-        let New
-        switch (shapeType) {
-            case RECTANGLE:
-                new Rectangle(
-                    index++,
-                    $('#size1-input').val(),
-                    $('#size2-input').val(),
-                )
-                return
-            case SQUARE: //Change this to be clearly-- it doesn't need to have a few less lines
-                New = Square
-                break
-            case CIRCLE:
-                New = Circle
-                break
-            case TRIANGLE:
-                New = Triangle
-                break
+    function adjust(val, max) {
+        if (val < 25) {
+            return 25
+        } else if (val > max) {
+            return max
         }
-        new New(
-            index++,
-            $('#size1-input').val(),
-        )
+        return val
     }
 
-    function changeShape(type, container) {
+    function createShape() {
+        let size1 = adjust($('#size1-input').val(), winWidth)
+        let size2 = adjust($('#size2-input').val(), winHeight)
+
+        switch (shapeType) {
+            case RECTANGLE:
+                new Rectangle(index++, size1, size2)
+                break
+            case SQUARE:
+                new Square(index++, size1)
+                break
+            case CIRCLE:
+                size1 = adjust(size1, winWidth / 2)
+                new Circle(index++, size1)
+                break
+            case TRIANGLE:
+                new Triangle(index++, size1)
+                break
+        }
+    }
+
+    function changeSection(type, currentSection) {
         $('.nav-link').removeClass('active')
-        $(container).addClass('active')
+        $(currentSection).addClass('active')
+        $('#size1-input').focus()
         $('#add-to-canvas').text('add ' + type + ' to canvas')
         shapeType = type
     }
-    return [createShape, changeShape]
+    return [createShape, changeSection]
 }
 
 $(document).ready(function () {
-    let [createShape, changeShape] = shapesCreator()
+    let [createShape, changeSection] = shapesCreator()
 
     $('#square-section').click(function (e) {
-        changeShape(SQUARE, this)
+        changeSection(SQUARE, this)
         $('#size1-label').text('Side Length')
         $('#size2').css('visibility', 'hidden')
     })
     $('#rectangle-section').click(function (e) {
-        changeShape(RECTANGLE, this)
+        changeSection(RECTANGLE, this)
         $('#size1-label').text('Width')
         $('#size2').css('visibility', 'visible')
     })
     $('#circle-section').click(function (e) {
-        changeShape(CIRCLE, this)
+        changeSection(CIRCLE, this)
         $('#size1-label').text('Radius')
         $('#size2').css('visibility', 'hidden')
     })
     $('#triangle-section').click(function (e) {
-        changeShape(TRIANGLE, this)
+        changeSection(TRIANGLE, this)
         $('#size1-label').text('Base Length')
         $('#size2').css('visibility', 'hidden')
     })
 
     $('#square-section').click()
-    $('#size1-input').val(200)
-    $('#size2-input').val(100)
+    $('#size1-input').val(150)
+    $('#size2-input').val(75)
     $('#size1-input').focus()
+    shapeInfo(null)
 
+    $('#canvas').click(() => shapeInfo(null))
     $('#add-to-canvas').click(function (e) {
         createShape()
         return false // Prevent page reload

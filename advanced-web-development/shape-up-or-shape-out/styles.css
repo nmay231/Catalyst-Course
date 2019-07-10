@@ -12,6 +12,10 @@
     text-transform: capitalize;
 }
 
+#shape-info {
+    text-transform: capitalize;
+}
+
 .shape {
     position: absolute;
     background-color: rgba(0, 0, 0, 0.7);
@@ -34,4 +38,8 @@
     border-color: rgba(255, 255, 0, 0.7);
     border-style: solid;
     background-color: transparent;
+}
+
+.unselectable {
+    user-select: none;
 }
