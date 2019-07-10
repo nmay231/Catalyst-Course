@@ -1,5 +1,29 @@
 # Covalence Catalyst progress
 
+Wednesday, July 10, 2019
+---
+* Completed the Shapes lab
+* Watched lab reviews for: 
+  - [Bootstrap Resume](https://www.youtube.com/watch?v=Vqv1tuk5au4) &mdash; ([Folder](https://github.com/nmay231/Catalyst-Course/tree/master/intermediate-web-development/bootstrap-resume/))
+  - [DOM DOM DOMMMMM](https://www.youtube.com/watch?v=TaDdHJLYhTY) &mdash; ([Folder](https://github.com/nmay231/Catalyst-Course/tree/master/intermediate-web-development/dom-dom-dommmmmmm))
+  - [99 Lines of Code Pt. 2](https://www.youtube.com/watch?v=I7f-K0SnrSg) &mdash; ([Folder](https://github.com/nmay231/Catalyst-Course/tree/master/intermediate-web-development/ninety-nine-lines-of-code-part-2))
+  - [Manipulating HTML with the DOM and jQuery](https://www.youtube.com/watch?v=YKceis--BBA) &mdash; ([Folder](https://github.com/nmay231/Catalyst-Course/tree/master/intermediate-web-development/manipulating-html))
+  - [Just My Type](https://www.youtube.com/watch?v=j_9j1FK6tWI) &mdash; ([Folder](https://github.com/nmay231/Catalyst-Course/tree/master/intermediate-web-development/just-my-type))
+* Moved those folders into [intermediate-web-development](https://github.com/nmay231/Catalyst-Course/tree/master/intermediate-web-development/)
+* Jumping into Asyncronous section
+
+Tuesday, July 9, 2019
+---
+* Put together the Dicey Business lab
+* Started working on Shape Up or Shape Out lab
+
+Monday, July 8, 2019
+---
+* Completed ES6 lab
+* Learned a bit about how ASI works
+* Finished OOP Drills lab
+* Started consolidating labs into sectioned folders
+
 Friday, July 5, 2019
 ---
 * Completed last jQuery lab marking the end of the Intermediate Web Dev section
