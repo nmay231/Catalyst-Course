@@ -9,7 +9,8 @@ Wednesday, July 10, 2019
   - [99 Lines of Code Pt. 2](https://www.youtube.com/watch?v=I7f-K0SnrSg) &mdash; ([Folder](https://github.com/nmay231/Catalyst-Course/tree/master/intermediate-web-development/ninety-nine-lines-of-code-part-2))
   - [Manipulating HTML with the DOM and jQuery](https://www.youtube.com/watch?v=YKceis--BBA) &mdash; ([Folder](https://github.com/nmay231/Catalyst-Course/tree/master/intermediate-web-development/manipulating-html))
   - [Just My Type](https://www.youtube.com/watch?v=j_9j1FK6tWI) &mdash; ([Folder](https://github.com/nmay231/Catalyst-Course/tree/master/intermediate-web-development/just-my-type))
-* Moved those folders into [intermediate-web-development](https://github.com/nmay231/Catalyst-Course/tree/master/intermediate-web-development/)
+* Moved those folders into [intermediate-web-development/](https://github.com/nmay231/Catalyst-Course/tree/master/intermediate-web-development/)
+* Updated/created older READMEs
 * Jumping into Asyncronous section
 
 Tuesday, July 9, 2019
