@@ -1,5 +1,10 @@
 # Covalence Catalyst progress
 
+Thursday. July 11, 2019
+---
+* Completed Async Drills and Promising Results labs
+* Watched [Context Clues](https://www.youtube.com/watch?v=rmGuJrlJWOo) ([Folder](https://github.com/nmay231/Catalyst-Course/tree/master/advanced-web-development/context-clues)) and [DiceyBusiness](https://www.youtube.com/watch?v=PWMtI6YHS1k) ([Folder](https://github.com/nmay231/Catalyst-Course/tree/master/advanced-web-development/dicey-business)) lab reviews
+
 Wednesday, July 10, 2019
 ---
 * Completed the Shapes lab
