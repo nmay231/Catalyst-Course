@@ -1,5 +1,20 @@
 # Covalence Catalyst progress
 
+Monday, July 15, 2019
+---
+* Watched lab reviews:
+    - [Shape Up or Shape Out](https://www.youtube.com/watch?v=DQcZ6zvhuMg)
+    - [Promising Results](https://www.youtube.com/watch?v=twmZjHQdHF8)
+<!--    - [Reacting to React](https://www.youtube.com/watch?v=x1vmsImawIg) (Unfortunately, using an old version) -->
+* Finished [Reacting to APIs](https://github.com/nmay231/Catalyst-Course/tree/master/reactjs/reacting-to-apis) lab
+* Fixed bug in Shapes lab preventing info to show on click
+* Progress with Chirper lab
+
+Friday, July 12, 2019
+---
+* React labs
+* API section
+
 Thursday. July 11, 2019
 ---
 * Completed Async Drills and Promising Results labs
