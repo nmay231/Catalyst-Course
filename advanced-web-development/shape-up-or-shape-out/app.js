@@ -131,11 +131,11 @@ class Triangle extends Shape {
 
 let genericShape = {
     describe: () => ({
-        type: 'Generic Shape',
-        width: 100,
-        height: 20,
-        area: 2000,
-        perimeter: 240,
+        type: 'The Canvas',
+        width: 600,
+        height: 600,
+        area: 600 ** 2,
+        perimeter: 600 * 4,
         radius: undefined,
         circumference: undefined,
     })
@@ -239,7 +239,11 @@ $(document).ready(function () {
     $('#size1-input').focus()
     shapeInfo(null)
 
-    $('#canvas').click(() => shapeInfo(null))
+    $('#canvas').click((e) => {
+        if (e.target.id === 'canvas') {
+            shapeInfo(null)
+        }
+    })
     $('#add-to-canvas').click(function (e) {
         createShape()
         return false // Prevent page reload
