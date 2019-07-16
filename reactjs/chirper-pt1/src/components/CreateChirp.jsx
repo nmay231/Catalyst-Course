@@ -5,7 +5,7 @@ class CreateChirp extends Component {
         super(props)
         this.props = props
         this.state = {
-            showForm: true,
+            showForm: false,
             user: '',
             chirpContent: '',
         }
@@ -19,7 +19,10 @@ class CreateChirp extends Component {
 
     handleSubmit = (e) => {
         e.preventDefault()
-        // this.props.addChirp
+        this.props.addChirp({
+            user: this.state.user,
+            chirpContent: this.state.chirpContent,
+        })
         this.setState({
             chirpContent: '',
         })
@@ -45,9 +48,9 @@ class CreateChirp extends Component {
                     <button className="btn col-auto" onClick={this.handleShowToggle}
                         id="show-form">Hide Form</button>
                 </section>
-                <section className="row justify-content-center">
+                <section className="row justify-content-center mb-4">
                     <form className="w-50 border rounded py-3 px-5">
-                        <div className="form-group w-25">
+                        <div className="form-group w-50">
                             <label htmlFor="chirp-user">UserName</label>
                             <input type="text" id="chirp-user" className="form-control"
                                 onChange={this.handleChange} value={this.state.user} />
@@ -65,7 +68,7 @@ class CreateChirp extends Component {
             return (
                 <section className="row justify-content-center mb-4">
                     <button className="btn btn-secondary col-auto" onClick={this.handleShowToggle}
-                        id="show-form">Show Form</button>
+                        id="show-form">Show Chirp Form</button>
                 </section>
             )
         }

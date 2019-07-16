@@ -1,13 +1,13 @@
 import React from 'react'
 import Chirp from './Chirp'
 
-const ChirpFeed = props => {
-    let chirps = props.chirps.map(
-        chirp => <Chirp {...chirp} />
-    )
+const ChirpFeed = ({ chirps }) => {
+    if (chirps === null) {
+        chirps = []
+    }
     return (
         <section className="row">
-            {chirps}
+            {chirps.map(chirp => <Chirp {...chirp} />)}
         </section>
     )
 }
