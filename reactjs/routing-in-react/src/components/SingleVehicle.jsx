@@ -3,50 +3,47 @@ import VehicleCard from './VehicleCard'
 
 const URL = 'https://ghibliapi.herokuapp.com/vehicles'
 
-export default class VehiclePage extends Component {
+export default class SingleVehicle extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            vehicles: [],
+            vehicle: {},
         }
     }
 
-    fetchPilot = async (index, url) => {
+    fetchPilot = async (url) => {
         let rawData = await fetch(url)
         let name = (await rawData.json()).name
         this.setState((currentState, props) => {
-            currentState.vehicles[index]['pilot'] = name
+            currentState.vehicle['pilot'] = name
             return currentState
         })
     }
 
-    fetchFilm = async (index, url) => {
+    fetchFilm = async (url) => {
         let rawData = await fetch(url)
         let title = (await rawData.json()).title
         this.setState((currentState, props) => {
-            currentState.vehicles[index]['films'] = title
+            currentState.vehicle['films'] = title
             return currentState
         })
     }
 
     componentDidMount() {
-        fetch(URL)
+        fetch(URL + '/' + this.props.match.params.vehicleId)
             .then(rawData => rawData.json())
-            .then(vehicles => {
-                for (let index in vehicles) {
-                    this.fetchPilot(index, vehicles[index]['pilot'])
-                    let film = vehicles[index]['films']
-                    let filmId = film.split('/').slice(-1)[0]
-                    this.fetchFilm(index, film)
-                    vehicles[index] = {
-                        ...vehicles[index],
+            .then(vehicle => {
+                this.fetchPilot(vehicle['pilot'])
+                let film = vehicle['films']
+                let filmId = film.split('/').slice(-1)[0]
+                this.fetchFilm(film)
+                this.setState({
+                    vehicle: {
+                        ...vehicle,
                         pilot: 'Loading...',
                         films: 'Loading...',
                         filmId,
-                    }
-                }
-                this.setState({
-                    vehicles,
+                    },
                 })
             })
             .catch(err => console.error(err))
@@ -54,11 +51,9 @@ export default class VehiclePage extends Component {
 
     render() {
         return (
-            <div>
+            <div className="col mt-4">
                 <div className="row justify-content-center">
-                    {this.state.vehicles.map(
-                        vehicle => <VehicleCard key={vehicle.id} {...vehicle} />
-                    )}
+                    <VehicleCard {...this.state.vehicle} expand />
                 </div>
             </div>
         )

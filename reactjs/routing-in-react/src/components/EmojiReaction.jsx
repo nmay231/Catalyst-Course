@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faGrinStars as regStars } from '@fortawesome/free-regular-svg-icons'
-import { faGrinStars as solidStars } from '@fortawesome/free-solid-svg-icons'
+
+import Emoji, { regStars, solidStars } from './Emoji'
 
 export default class EmojiReaction extends Component {
     constructor(props) {
@@ -11,11 +10,17 @@ export default class EmojiReaction extends Component {
         }
     }
 
-    render() {
-        return (
-            <div>
+    handleClick = (e) => {
+        this.setState({
+            activated: !this.state.activated,
+        })
+    }
 
-            </div>
-        )
+    render() {
+        if (this.state.activated) {
+            return (<Emoji style={{ color: 'darkgreen' }} onClick={this.handleClick} icon={solidStars} />)
+        } else {
+            return (<Emoji onClick={this.handleClick} icon={regStars} />)
+        }
     }
 }
