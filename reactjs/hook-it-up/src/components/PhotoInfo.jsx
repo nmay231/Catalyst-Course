@@ -1,10 +1,13 @@
-import React, { useState } from 'react'
+import React, { } from 'react'
+import { Media } from 'reactstrap'
 
-const PhotoInfo = () => {
+const PhotoInfo = ({ style, src }) => {
     return (
-        <div>
-
-        </div>
+        <Media>
+            <Media left top style={style}>
+                <Media object src={src} alt="useless example image" />
+            </Media>
+        </Media>
     )
 }
 
