@@ -1,10 +1,30 @@
 # Covalence Catalyst progress
 
+Thursday, July 18, 2019
+---
+* Looked under the hood of `State` and `Effect` hooks and how they keep track of different states/effects
+* Finished [Hook it Up](https://github.com/nmay231/Catalyst-Course/tree/master/reactjs/hook-it-up)
+* Next up: Backend Development with node express
+
+Wednesday, July 17, 2019
+---
+* Completed [Routing in React](https://github.com/nmay231/Catalyst-Course/tree/master/reactjs/routing-in-react) lab
+* Watched lab reviews
+    - [Chirper Part 1](https://www.youtube.com/watch?v=N4wwXCA0ksM) &mdash; ([Folder](https://github.com/nmay231/Catalyst-Course/tree/master/reactjs/chirper-pt1))
+    - [Reacting to APIs](https://www.youtube.com/watch?v=erH4GgPqfkM) &mdash; ([Folder](https://github.com/nmay231/Catalyst-Course/tree/master/reactjs/reacting-to-apis))
+* On to React Hooks
+
+Tuesday, July 16, 2019
+---
+* Learned about [Context](https://www.youtube.com/watch?v=dCaLbDMH3dM)
+* Completed [Chirper Part 1](https://github.com/nmay231/Catalyst-Course/tree/master/reactjs/chirper-pt1) lab
+* Progressing in Routing
+
 Monday, July 15, 2019
 ---
 * Watched lab reviews:
-    - [Shape Up or Shape Out](https://www.youtube.com/watch?v=DQcZ6zvhuMg)
-    - [Promising Results](https://www.youtube.com/watch?v=twmZjHQdHF8)
+    - [Shape Up or Shape Out](https://www.youtube.com/watch?v=DQcZ6zvhuMg) &mdash; ([Folder](https://github.com/nmay231/Catalyst-Course/tree/master/advanced-web-development/shape-up-or-shape-out))
+    - [Promising Results](https://www.youtube.com/watch?v=twmZjHQdHF8) &mdash; ([Folder](https://github.com/nmay231/Catalyst-Course/tree/master/advanced-web-development/promising-results))
 <!--    - [Reacting to React](https://www.youtube.com/watch?v=x1vmsImawIg) (Unfortunately, using an old version) -->
 * Finished [Reacting to APIs](https://github.com/nmay231/Catalyst-Course/tree/master/reactjs/reacting-to-apis) lab
 * Fixed bug in Shapes lab preventing info to show on click
