@@ -1,5 +1,10 @@
 # Covalence Catalyst progress
 
+Friday, July 19, 2019
+---
+* Kicked back mostly
+* Completed [Node.js Basics](https://github.com/nmay231/Catalyst-Course/tree/master/backend-dev/node-basics)
+
 Thursday, July 18, 2019
 ---
 * Looked under the hood of `State` and `Effect` hooks and how they keep track of different states/effects
