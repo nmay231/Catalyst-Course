@@ -29,8 +29,7 @@ app.get('/formsubmissions', async (req, res) => {
     }
     // I just don't want to write that try-catch boilerplate...
     let data = await jsonfile.readFile(FILE_PATH)
-    // Nor format the resonse data...
-    res.send(data)
+    res.json(data)
 })
 
 
