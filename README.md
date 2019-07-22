@@ -1,5 +1,9 @@
 # Covalence Catalyst progress
 
+Sunday, July 21, 2019
+---
+* Did extra and finished the [Express](https://github.com/nmay231/Catalyst-Course/tree/master/backend-dev/expressjs) lab
+
 Friday, July 19, 2019
 ---
 * Kicked back mostly
