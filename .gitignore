@@ -1,2 +1,6 @@
-# direction for random messing around
+# directory for random messing around
 messing-around/
+
+# local version of a basic react project
+# https://github.com/covalence-io/barebones-react-typescript-express.git
+react-project-boilerplate/
