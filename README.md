@@ -1,5 +1,17 @@
 # Covalence Catalyst progress
 
+Tuesday, July 23, 2019
+---
+* Finished Advanced section of [APIs with express](https://github.com/nmay231/Catalyst-Course/tree/master/backend-dev/building-apis-with-express)
+* Lab review: [Routing in React](https://www.youtube.com/watch?v=P3GDmM6c23k)
+* Cool extra info about [Location props](https://www.youtube.com/watch?v=F_F4mTSJ7zQ)
+* Created [todo](todo.md) list for future projects and stuff
+* Put together a simple list of libraries, resources, etc. into my [tulbox](tulbox.md)
+
+Monday, July 22, 2019
+---
+* Completed basic section of Building APIs with Express
+
 Sunday, July 21, 2019
 ---
 * Did extra and finished the [Express](https://github.com/nmay231/Catalyst-Course/tree/master/backend-dev/expressjs) lab
