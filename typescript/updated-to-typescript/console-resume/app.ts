@@ -26,11 +26,7 @@
     * BAM: TypeScript
 */
 
-displayPosition(
-    name='Noah May',
-    career='Full-stack Web Developer',
-    desc='Normal human being'
-)
+displayPosition('Noah May', 'Full-stack Web Developer', 'Normal human being')
 
 printList('My Interests', [
     'Programming',
@@ -46,7 +42,7 @@ printList('My Previous Experience', [
     'Instructed a small group of Mid- to High-school students in a programming course - taught the basics of programming in Python',
 ])
 
-skillz = {
+let skillz = {
     'Python': true,
     'JavaScript': true,
     'Rubik\'s cubes (and non-cubes)': true,
@@ -61,21 +57,21 @@ printList(
     Object.keys(skillz).map(key => coolSkill(key, skillz[key]))
 )
 
-function coolSkill(skill, isCool) {
+function coolSkill(skill: string, isCool: boolean): string {
     return isCool ? 'BAM: ' + skill : skill
 }
 
-function printList(heading, list) {
-    console.log(heading + ':')
+function printList(heading: string, list: string[]): void {
+    console.group('%c' + heading + ':', 'color: red')
     for (let item of list) {
-        console.log('* ' + item)
+        console.log('%c' + item, 'color: purple')
     }
-    console.log('\n')
+    console.groupEnd()
 }
 
-function displayPosition(name, career, desc) {
-    console.log('Name: ' + name.toUpperCase())
-    console.log('Career: ' + career)
-    console.log('Description: ' + desc)
-    console.log('\n')
+function displayPosition(name: string, career: string, desc: string): void {
+    console.group('%cName: ' + name.toUpperCase(), 'color: blue')
+    console.log('%cCareer: ' + career, 'color: blue')
+    console.log('%cDescription: ' + desc, 'color: blue')
+    console.groupEnd()
 }

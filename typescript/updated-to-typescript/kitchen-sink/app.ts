@@ -19,7 +19,8 @@ for (let item of veggies) {
     console.log(item)
 }
 
-let peoples = [{
+let peoples = [
+    {
         name: 'Bartholomew',
         age: 7,
     },
@@ -53,11 +54,11 @@ if (oddnessDeterminer % 2 == 0) {
     console.log('The world is an odd place!')
 }
 
-function sayHello(message) {
+function sayHello(message: string): void {
     alert(message)
 }
 
-function checkAge(name, age) {
+function checkAge(name: string, age: number): boolean {
     if (age < 21) {
         alert('Sorry, ' + name + '. You must be at least 21 to enter this site.')
         return false
@@ -70,6 +71,6 @@ function checkAge(name, age) {
     }
 }
 
-function getLength(string) {
-    return string.length
+function getLength(text: string): number {
+    return text.length
 }
