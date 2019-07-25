@@ -1,0 +1,28 @@
+.btn {
+    cursor: pointer;
+}
+
+#use-unicode,
+#use-unicode-label {
+    cursor: pointer;
+}
+
+.unselectable {
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+#dice-container {
+    font-size: 50px;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.dice {
+    width: 75px;
+    height: 75px;
+    margin-right: 10px;
+    cursor: pointer;
+}
