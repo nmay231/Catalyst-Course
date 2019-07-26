@@ -1,5 +1,20 @@
 # Covalence Catalyst progress
 
+Thursday, July 25, 2019
+---
+* Watched [Express API](https://www.youtube.com/watch?v=yhv28HZClGo) lab review
+* Updated old labs to typescript for practice &mdash; [Folder](https://github.com/nmay231/Catalyst-Course/tree/master/typescript/updated-to-typescript)
+* In the process, learned to setup webpack
+
+Wednesday, July 24, 2019
+---
+* Jumping into the Typescript section
+* Watched lab reviews
+    * [Hook it up](https://www.youtube.com/watch?v=mN_DdVBQS9k)
+    * [Node basics](https://www.youtube.com/watch?v=cX4T0zCU-08)
+    * [Express basics](https://www.youtube.com/watch?v=G17ZWbhOgHs)
+
+
 Tuesday, July 23, 2019
 ---
 * Finished Advanced section of [APIs with express](https://github.com/nmay231/Catalyst-Course/tree/master/backend-dev/building-apis-with-express)
