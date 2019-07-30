@@ -1,14 +1,8 @@
-const express = require('express')
-const cors = require('cors')
+import * as express from 'express'
+import * as cors from 'cors'
 
-const ChirpStore = require('../../../chirpstore')
-const {
-    CreateChirp,
-    DeleteChirp,
-    GetChirps,
-    GetChirp,
-    UpdateChirp,
-} = ChirpStore
+import chirpstore from '../../../chirpstore'
+let { createChirp, deleteChirp, getChirps, getChirp, updateChirp } = chirpstore
 
 let router = express.Router()
 
@@ -17,45 +11,41 @@ router.use(express.json())
 
 router.post('/', (req, res) => {
     if (req.body.user && req.body.message) {
-        CreateChirp({
+        createChirp({
             upVotes: 0,
             ...req.body
         })
-        res.statusCode = 200
-        res.send('success')
+        res.status(200).send('success')
     } else {
-        res.statusCode = 400
-        res.send('Error: the chirp must have "user" and "message" attributes')
+        res.status(400).send('Error: the chirp must have "user" and "message" attributes')
     }
 })
 
 router.get('/', (req, res) => {
-    res.json(GetChirps())
+    res.json(getChirps())
 })
 
 router.get('/:id', (req, res) => {
-    res.json(GetChirp(req.params.id))
+    res.json(getChirp(req.params.id))
 })
 
-router.put('/:id', (req, res) => {
-    if (req.body.user && req.body.message) {
-        UpdateChirp(req.params.id, {
+router.put('/:id', ({ body, params }, res) => {
+    if (body.user && body.message) {
+        updateChirp(params.id, {
             upVotes: 0,
-            ...req.body
+            ...body,
         })
-        res.statusCode = 200
-        res.send('success')
+        res.status(200).send('success')
     } else {
-        res.statusCode = 400
-        res.send('The chirp must have "user" and "message" attributes')
+        res.status(400).send('The chirp must have "user" and "message" attributes')
     }
 })
 
 router.delete('/:id', (req, res) => {
-    let chirp = GetChirp(req.params.id)
-    DeleteChirp(req.params.id)
-    res.statusCode = 200
-    res.json(chirp)
+    let chirp = getChirp(req.params.id)
+    deleteChirp(req.params.id)
+    // Sending deleted chirp for convenience
+    res.status(200).json(chirp)
 })
 
-module.exports = router
+export default router

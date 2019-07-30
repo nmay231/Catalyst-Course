@@ -1,41 +1,47 @@
-const fs = require('fs');
-let chirps = { nextid: 0 };
+import * as fs from 'fs'
 
-if(fs.existsSync('chirps.json')) {
-    chirps = JSON.parse(fs.readFileSync('chirps.json'));
+export interface Chirp {
+    user: string,
+    message: string,
+    upVotes: number,
 }
 
-let getChirps = () => {
-    return Object.assign({}, chirps); //create a copy and return it
+function ChirpStore() {
+    let chirps: Chirp[] = []
+    let nextid: number = 0
+    if (fs.existsSync('chirps.json')) {
+        ( // You have to wrap with () to destructure it...  ¯\_(ツ)_/¯
+            { chirps, nextid } = JSON.parse(fs.readFileSync('chirps.json').toString())
+        )
+    }
+
+    let getChirps = (): Chirp[] => {
+        return [...chirps]
+    }
+
+    let getChirp = (id: number): Chirp => {
+        return Object.assign({}, chirps[id])
+    }
+
+    let createChirp = (chirp: Chirp): void => {
+        chirps[nextid++] = chirp
+        writeChirps()
+    }
+
+    let updateChirp = (id: number, chirp: Chirp): void => {
+        chirps[id] = chirp
+        writeChirps()
+    }
+
+    let deleteChirp = (id: number): void => {
+        delete chirps[id]
+        writeChirps()
+    }
+
+    let writeChirps = (): void => {
+        fs.writeFileSync('chirps.json', JSON.stringify({ chirps, nextid }))
+    }
+    return { getChirp, getChirps, createChirp, updateChirp, deleteChirp }
 }
 
-let getChirp = id => {
-    return Object.assign({}, chirps[id]); //create a copy and return it
-}
-
-let createChirp = (chirp) => {
-    chirps[chirps.nextid++] = chirp;
-    writeChirps();
-};
-
-let updateChirp = (id, chirp) => {
-    chirps[id] = chirp;
-    writeChirps();
-}
-
-let deleteChirp = id => {
-    delete chirps[id];
-    writeChirps();
-}
-
-let writeChirps = () => {
-    fs.writeFileSync('chirps.json', JSON.stringify(chirps));
-};
-
-module.exports = {
-    CreateChirp: createChirp,
-    DeleteChirp: deleteChirp,
-    GetChirps: getChirps,
-    GetChirp: getChirp,
-    UpdateChirp: updateChirp
-}
+export default ChirpStore()

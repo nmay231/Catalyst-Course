@@ -1,35 +1,27 @@
-import * as React from 'react';
+import * as React from 'react'
+import { BrowserRouter as Router, Route, Link, Redirect } from 'react-router-dom'
 
-import './scss/app';
+import './scss/app'
+import { ChirpsProvider } from './components/ChirpsContext'
+import HomePage from './views/HomePage'
+import ChirpPage from './views/ChirpPage'
 
-export default class App extends React.Component<IAppProps, IAppState> {
+const App: React.SFC<IAppProps> = () => {
 
-    constructor(props: IAppProps) {
-        super(props);
-
-        this.state = { name: null };
-    }
-
-    async componentWillMount() {
-        let r = await fetch('/api/hello');
-        let name = await r.json();
-        this.setState({ name })
-    }
-
-    render () {
-        return (
-            <main className="container">
-                <h1 className="covalence-blue">Hello {this.state.name}!</h1>
-                <h2></h2>
-            </main>
-        )
-    }
+    return (
+        <Router>
+            <ChirpsProvider>
+                <main className="container">
+                    <Route exact path='/' component={HomePage} />
+                    <Route path='/chirp/:id/admin' component={ChirpPage} />
+                    <Route path="/chirp/add" component={ChirpPage} />
+                    <Redirect path="*" to="/" />
+                </main>
+            </ChirpsProvider>
+        </Router>
+    )
 }
 
-interface IAppProps {
+export default App
 
-}
-
-interface IAppState {
-    name: string;
-}
+interface IAppProps { }

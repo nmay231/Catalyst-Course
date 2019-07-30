@@ -1,8 +1,8 @@
-const express = require('express')
-const chirpsRouter = require('./chirps')
+import * as express from 'express'
+import chirpsRouter from './chirps'
 
-let APIRouter = express.Router()
+let apiRouter = express.Router()
 
-APIRouter.use('/chirps', chirpsRouter)
+apiRouter.use('/chirps', chirpsRouter)
 
-module.exports = APIRouter
+export default apiRouter
