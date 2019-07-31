@@ -8,8 +8,8 @@ const HomePage = () => {
     const { chirps } = useChirpstore()
 
     return (<>
-        <section className="row">
-            <Link to="/chirp/add">hey yall</Link>
+        <section className="row justify-content-center my-4">
+            <Link to="/chirp/add" className="btn btn-primary">Add Chirp</Link>
         </section>
         <section className="row">
             {chirps.map((chirp, i) => <ChirpCard key={i} id={i} chirp={chirp} />)}

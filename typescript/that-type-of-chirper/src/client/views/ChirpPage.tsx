@@ -1,19 +1,26 @@
-import React, { useContext } from 'react'
+import React, { useState, useEffect } from 'react'
 import { RouteComponentProps } from 'react-router-dom'
 
-import ChirpCard from '../components/ChirpCard'
+import ChirpForm from '../components/ChirpForm'
 import { chirpTemplate } from '../utils/consts'
-import { ChirpsContext } from '../components/ChirpsContext';
+import useChirpstore from '../utils/useChirpstore'
 
-const ChirpPage: React.SFC<IPropsChirpPage> = ({ match: { params: { id } } }) => {
-    let [chirps, setChirps] = useContext(ChirpsContext)
+const ChirpPage: React.FC<IPropsChirpPage> = ({ match: { params: { id } } }) => {
 
-    console.log(id)
-    let chirp = id ? chirps[parseInt(id)] : chirpTemplate
-    console.log(chirp, chirps[parseInt(id)])
+    let { getChirp } = useChirpstore()
+
+    const [chirp, setChirp] = useState(chirpTemplate)
+
+    useEffect(() => {
+        if (id) {
+            (async () => {
+                setChirp(await getChirp(parseInt(id)))
+            })()
+        }
+    }, [id])
     return (
         <div>
-            <ChirpCard expanded chirp={{ user: chirp.user, message: chirp.message }} />
+            <ChirpForm chirp={{ ...chirp }} id={id ? parseInt(id) : -1} />
         </div>
     )
 }

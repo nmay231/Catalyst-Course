@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { BrowserRouter as Router, Route, Link, Redirect } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom'
 
 import './scss/app'
 import { ChirpsProvider } from './components/ChirpsContext'
@@ -15,7 +15,6 @@ const App: React.SFC<IAppProps> = () => {
                     <Route exact path='/' component={HomePage} />
                     <Route path='/chirp/:id/admin' component={ChirpPage} />
                     <Route path="/chirp/add" component={ChirpPage} />
-                    <Redirect path="*" to="/" />
                 </main>
             </ChirpsProvider>
         </Router>

@@ -3,16 +3,14 @@ import * as fs from 'fs'
 export interface Chirp {
     user: string,
     message: string,
-    upVotes: number,
 }
 
 function ChirpStore() {
     let chirps: Chirp[] = []
     let nextid: number = 0
     if (fs.existsSync('chirps.json')) {
-        ( // You have to wrap with () to destructure it...  ¯\_(ツ)_/¯
-            { chirps, nextid } = JSON.parse(fs.readFileSync('chirps.json').toString())
-        )
+        chirps = JSON.parse(fs.readFileSync('chirps.json').toString())
+        nextid = chirps.length
     }
 
     let getChirps = (): Chirp[] => {
@@ -34,12 +32,12 @@ function ChirpStore() {
     }
 
     let deleteChirp = (id: number): void => {
-        delete chirps[id]
+        chirps.splice(id, 1)
         writeChirps()
     }
 
     let writeChirps = (): void => {
-        fs.writeFileSync('chirps.json', JSON.stringify({ chirps, nextid }))
+        fs.writeFileSync('chirps.json', JSON.stringify(chirps))
     }
     return { getChirp, getChirps, createChirp, updateChirp, deleteChirp }
 }

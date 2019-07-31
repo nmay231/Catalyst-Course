@@ -7,9 +7,11 @@ const fakeAxios = async (url: string, method: string = 'GET', body?: {}) => {
         let response = await fetch(url, {
             method,
             headers,
-            body: JSON.stringify(body),
+            body: (body ? JSON.stringify(body) : undefined)
         })
-        return await response.json()
+        if (method === 'GET') {
+            return await response.json()
+        }
     } catch (err) {
         console.error(err)
     }

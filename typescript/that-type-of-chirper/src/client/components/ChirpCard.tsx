@@ -1,42 +1,33 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import { Link } from 'react-router-dom'
 
 
 import { Chirp } from '../utils/consts'
 
-const ChirpCard: React.FunctionComponent<IPropsChirpCard> = ({ expanded, chirp: { user, message }, id }) => {
-
-    let width = expanded ? 'col-6' : 'col-md-6 col-lg-4'
+const ChirpCard: React.FunctionComponent<IPropsChirpCard> = ({ chirp: { user, message }, id }) => {
 
     return (
-        <div className={width}>
+        <div className="col-md-6 col-lg-4 mt-4">
             <article className="card">
                 <div className="card-header">
                     <h4 className="card-title"> <b>{user}</b> chirped </h4>
                 </div>
-                <div className="card-body">
+                <div className="card-body d-flex">
                     <p className="card-text"> {message} </p>
-                </div>
-                {!expanded &&
-                    <Link to={`/chirp/${id}/admin`}>
-                        <button className="btn btn-primary">
-                            Admin
+                    <Link to={`/chirp/${id}/admin`} className="ml-auto mt-auto mb-2">
+                        <button className="btn btn-primary text-nowrap">
+                            Admin Options
                         </button>
                     </Link>
-                }
+                </div>
             </article>
         </div>
     )
 }
 
 interface IPropsChirpCard {
-    expanded?: boolean,
     chirp: Chirp,
     id?: number,
 }
-
-// ChirpCard.defaultProps = {
-//     chirp: { user: "", message: "" }
-// }
 
 export default ChirpCard

@@ -8,43 +8,51 @@ const useChirpstore = () => {
 
     const [chirps, setChirps] = useContext(ChirpsContext)
 
+    async function getChirp(id: number) {
+        try {
+            return await fakeAxios(CHIRPS_API + `/${id}`)
+        } catch (err) {
+            console.error(`Failed to get chirp with id=${id}`)
+        }
+    }
+
     function createChirp(chirp: Chirp): void {
-        fakeAxios(CHIRPS_API, 'POST', { chirp })
+        fakeAxios(CHIRPS_API, 'POST', { ...chirp })
             .catch((err) => console.error('Failed to post new chirp to api\n', err))
             .then((res) => {
-                return fakeAxios(CHIRPS_API)
-            })
-            .then(({ data }) => {
-                setChirps([...data, chirp])
+                refreshChirps()
             })
     }
 
     function updateChirp(id: number, chirp: Chirp): void {
-        fakeAxios(CHIRPS_API, 'PUT', { chirp })
-            .catch((err) => console.error(`Failed to update chirp with id=${id}\n`, err))
+        fakeAxios(CHIRPS_API + `/${id}`, 'PUT', { ...chirp })
+            .catch((err) => console.log(`Failed to update chirp with id=${id}\n`, err))
             .then((res) => {
-                (async () => {
-                    setChirps(await fakeAxios(CHIRPS_API))
-                })
+                refreshChirps()
             })
     }
 
     function deleteChirp(id: number): void {
         fakeAxios(CHIRPS_API + `/${id}`, 'DELETE')
-            .catch((err) => console.log(`Failed to delete chirp with id=${id}\n`, err))
+            .catch((err) => console.error(`Failed to delete chirp with id=${id}\n`, err))
             .then((res) => {
-                (async () => {
-                    setChirps(await fakeAxios(CHIRPS_API))
-                })
+                refreshChirps()
             })
     }
 
+    async function refreshChirps() {
+        let temp: Chirp[] = await fakeAxios(CHIRPS_API)
+        setChirps(temp.filter((c) => c !== null))
+    }
+
     return {
+        getChirp,
         createChirp,
         updateChirp,
         deleteChirp,
         chirps,
         chirpTemplate,
+        refreshChirps,
     }
 }
 
