@@ -1,10 +1,26 @@
-import * as express from 'express';
-import apiRouter from './routes';
+import * as express from 'express'
+import * as morgan from 'morgan'
+import * as path from 'path'
 
-const app = express();
+import apiRouter from './routes'
 
-app.use(express.static('public'));
-app.use(apiRouter);
+require('dotenv').config()
+if (!process.env) {
+    throw Error('Must provide environment file ".env"')
+} else {
+    console.log('Loaded environment file successfully')
+}
 
-const port = process.env.PORT || 3000;
-app.listen(port, () => console.log(`Server listening on port: ${port}`));
+const app = express()
+
+app.use(morgan('dev'))
+
+app.use(express.static('public'))
+app.use('/api', apiRouter)
+
+app.use('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '../public/index.html'))
+})
+
+const port = process.env.PORT || 3000
+app.listen(port, () => console.log(`Server listening on port: ${port}`))
