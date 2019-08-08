@@ -1,6 +1,12 @@
-const fakeAxios = async (url: string, method: string = 'GET', body?: {}) => {
+import 'isomorphic-fetch'
+
+const fakeAxios = async (url: string, method: string = 'GET', body?: {}, auth?: { name: string, password: string }) => {
     let headers: any = {
-        'Content-type': 'application/json'
+        'Content-type': 'application/json',
+    }
+
+    if (auth) {
+        headers.authorization = auth.name + ':' + auth.password
     }
 
     try {

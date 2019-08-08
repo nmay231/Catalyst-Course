@@ -13,7 +13,10 @@ if (!process.env) {
 
 const app = express()
 
-app.use(morgan('dev'))
+app.use(morgan('dev', {
+    // User info requests were cloging up the logs, so I skipped them
+    skip: (req, res) => req.originalUrl.match(/\/api\/users\/[0-9]+/) !== null,
+}))
 
 app.use(express.static('public'))
 app.use('/api', apiRouter)

@@ -8,6 +8,21 @@ router.get('/', async (req, res) => res.status(200).json(
     await Users.getAll()
 ))
 
+router.get('/login', (req, res) => {
+    let [name, password] = req.headers.authorization.split(':')
+    Users.validLogin(name, password)
+        .then(async (valid) => {
+            if (valid) { // This is totally a secure login
+                res.status(200).json({
+                    valid,
+                    userid: (await Users.getByName(name))[0].id,
+                })
+            } else {
+                res.status(401).json({ valid, userid: null })
+            }
+        })
+})
+
 router.get('/:id', async (req, res) => res.status(200).json(
     (await Users.getOne(parseInt(req.params.id)))[0]
 ))

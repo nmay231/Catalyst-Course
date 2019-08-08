@@ -4,6 +4,9 @@ import { Query } from './index'
 
 const getAll = () => Query('SELECT * FROM chirps')
 const getOne = (id: number) => Query('SELECT * FROM chirps WHERE id=?', [id])
+
+const getAllIds = () => Query('SELECT id FROM chirps')
+
 const getChirpsBy = (userid: number) => Query('SELECT * FROM chirps WHERE userid=?', [userid])
 
 const create = (userid: number, text: string, location?: string) => {
@@ -28,6 +31,7 @@ const deleteChirp = (id: number) =>
 export default {
     getAll,
     getOne,
+    getAllIds,
     getChirpsBy,
     create,
     update,

@@ -1,33 +1,67 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React, { useEffect, useState } from 'react'
+import { RouteComponentProps, withRouter } from 'react-router'
 
+import { IChirp, USERS_API, CHIRPS_API } from '../utils/consts'
+import fakeAxios from '../utils/fakeAxios'
 
-import { Chirp } from '../utils/consts'
+interface ChirpCardProps extends RouteComponentProps {
+    id: number,
+    loggedin?: number,
+    chirp?: IChirp,
+    editable?: boolean,
+}
 
-const ChirpCard: React.FunctionComponent<IPropsChirpCard> = ({ chirp: { user, message }, id }) => {
+const ChirpCard: React.FC<ChirpCardProps> = ({ id, chirp, loggedin, editable, history }) => {
+
+    const [author, setAuthor] = useState('')
+
+    if (!chirp) {
+        // get chirp by id
+    }
+
+    useEffect(() => {
+        (async () => {
+            let user = await fakeAxios(USERS_API + `/${chirp.userid}`)
+            if (user.id === loggedin) {
+                setAuthor('You')
+            } else {
+                setAuthor(user.name)
+            }
+        })()
+    }, [chirp.userid])
+
+    const deleteSelf = () => {
+        fakeAxios(CHIRPS_API + `/${chirp.id}`, 'DELETE')
+            .then(() => {
+                history.go(0)
+            })
+    }
 
     return (
-        <div className="col-md-6 col-lg-4 mt-4">
-            <article className="card">
-                <div className="card-header">
-                    <h4 className="card-title"> <b>{user}</b> chirped </h4>
+        <div className="col-lg-4">
+            <div className="card my-2">
+                <div className="card-body">
+                    <h4 className="card-title">
+                        <b>{author}</b> Chirped
+                    </h4>
+                    <hr />
+                    <div className="card-text d-flex">
+                        {chirp.text}
+                        {editable &&
+                            <>
+                                <div className="btn-group ml-auto mt-auto mb-1">
+                                    <button className="btn btn-primary" type="button"
+                                        onClick={() => history.push(`/chirp/edit/${chirp.id}`)}>Edit</button>
+                                    <button className="btn btn-danger" type="button"
+                                        onClick={deleteSelf}>Delete</button>
+                                </div>
+                            </>
+                        }
+                    </div>
                 </div>
-                <div className="card-body d-flex">
-                    <p className="card-text"> {message} </p>
-                    <Link to={`/chirp/${id}/admin`} className="ml-auto mt-auto mb-2">
-                        <button className="btn btn-primary text-nowrap">
-                            Admin Options
-                        </button>
-                    </Link>
-                </div>
-            </article>
+            </div>
         </div>
     )
 }
 
-interface IPropsChirpCard {
-    chirp: Chirp,
-    id?: number,
-}
-
-export default ChirpCard
+export default withRouter(ChirpCard)

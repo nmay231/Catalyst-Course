@@ -8,6 +8,11 @@ router.get('/', async (req, res) => res.status(200).json(
     await Chirps.getAll()
 ))
 
+// Unused in the end
+router.get('/ids', async (req, res) => res.status(200).json(
+    (await Chirps.getAllIds()).map((val) => val.id)
+))
+
 router.get('/:id', async (req, res) => res.status(200).json(
     (await Chirps.getOne(parseInt(req.params.id)))[0]
 ))
