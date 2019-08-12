@@ -2,6 +2,10 @@
 
 **Bolded tasks** mean they're complete.
 
+* Build up more features in the Chirper App
+    * Include *actual* authentication
+    * Add a mobile version
+
 * Put together a list of keystone projects from throughout the course
     * `Just My Type` (Intermediate JS)
     * `Dicey Business` and `Shape Up or Shape Out` (Advanced JS)

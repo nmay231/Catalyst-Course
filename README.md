@@ -1,5 +1,44 @@
 # Covalence Catalyst progress
 
+Sunday, August 11, 2019
+---
+* Finally pushed course progress
+* Added cool libraries/frameworks to my `tulbox`
+
+Friday, August 9, 2019
+---
+* Learned about `knex`, a query building library for common DBs
+
+Thursday, August 8, 2019
+---
+* Started working on the full-stack blog
+* Found a cool vscode extension for working with databases: SQLTools.
+
+Wednesday, August 7, 2019
+---
+* Finished the [Full Stack Chirper](https://github.com/nmay231/Catalyst-Course/tree/master/db/full-stack-chirp) lab
+
+Tuesday, August 6, 2019
+---
+* [TS Chirper](https://www.youtube.com/watch?v=K0KygRdKBk4) lab review
+
+Thursday, August 1, 2019
+---
+* Completed intro to [MySQL](https://github.com/nmay231/Catalyst-Course/tree/master/db/intro-to-sql) lab
+
+Wednesday, July 31, 2019
+---
+* Completed [Typescript Chirper](https://github.com/nmay231/Catalyst-Course/tree/master/typescript/that-type-of-chirper) lab wrapping up the Typescript section
+* On to db
+
+Tuesday, July 30, 2019
+---
+* [TS Conversions lab review](https://www.youtube.com/watch?v=uF0cRgB6tUU)
+
+Friday, July 26, 2019
+---
+* Learned how to use the Context hook to make a [cool little music player](https://www.youtube.com/watch?v=9HUiQsyr6Nc)
+
 Thursday, July 25, 2019
 ---
 * Watched [Express API](https://www.youtube.com/watch?v=yhv28HZClGo) lab review
@@ -52,7 +91,7 @@ Wednesday, July 17, 2019
 
 Tuesday, July 16, 2019
 ---
-* Learned about [Context](https://www.youtube.com/watch?v=dCaLbDMH3dM)
+* Learned about the [React Context API](https://www.youtube.com/watch?v=dCaLbDMH3dM)
 * Completed [Chirper Part 1](https://github.com/nmay231/Catalyst-Course/tree/master/reactjs/chirper-pt1) lab
 * Progressing in Routing
 
