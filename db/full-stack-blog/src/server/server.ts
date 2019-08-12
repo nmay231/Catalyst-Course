@@ -1,10 +1,22 @@
-import * as express from 'express';
-import apiRouter from './routes';
+import express from 'express'
+import helmet from 'helmet'
+import path from 'path'
 
-const app = express();
+import apiRouter from './routes'
 
-app.use(express.static('public'));
-app.use(apiRouter);
+if (!process.env.LOADED) {
+    throw Error('".env" file not found! Please edit the dev.env or prod.env file in /config/')
+}
 
-const port = process.env.PORT || 3000;
-app.listen(port, () => console.log(`Server listening on port: ${port}`));
+const app = express()
+app.use(helmet())
+
+app.use(express.static('public'))
+app.use('/api', apiRouter)
+
+app.use('*', (req, res) => res.sendFile(
+    path.resolve(__dirname, '../public/index.html'),
+))
+
+const port = process.env.PORT || 3000
+app.listen(port, () => console.log(`Server listening on port: ${port}`))

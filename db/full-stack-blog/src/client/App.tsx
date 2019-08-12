@@ -12,24 +12,25 @@ export default class App extends React.Component<IAppProps, IAppState> {
     }
 
     async componentWillMount() {
-        let r = await fetch('/api/hello');
-        let name = await r.json();
-        this.setState({ name })
-        let test = await axios.request({
-            method: 'GET',
-            url: '/api/hello',
-        })
-        axios.create
         // let test = await axios.get('/api/hello')
-        // let test = await axios.get('/api/hello')
-        console.log(test.data)
-        console.log(Object.keys(axios))
+        // console.log(test.data)
+        // this.setState({ name: test.data })
+    }
+
+    componentDidMount() {
+        // let input = document.querySelector('')
     }
 
     render() {
         return (
             <main className="container">
                 <h1 className="covalence-blue">Hello {this.state.name}!</h1>
+                <div className="form-group">
+                    <div className="form-control">
+                        <input type="text" style={{ border: 'none', outline: 0, padding: 0, boxShadow: 'none', display: 'inline-block' }} autoFocus />
+                    </div>
+                    <input type="text" className="form-control" />
+                </div>
                 <h2></h2>
             </main>
         )

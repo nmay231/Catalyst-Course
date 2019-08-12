@@ -1,9 +1,25 @@
-import * as express from 'express';
+import { Router } from 'express'
+import 'dotenv'
+import express from 'express'
+import cors from 'cors'
+import morgan from 'morgan'
 
-const router = express.Router();
+import BlogsAPI from './blogs'
+import TagsAPI from './tags'
 
-router.get('/api/hello', (req, res, next) => {
-    res.json('World');
-});
+const router = Router()
 
-export default router;
+router.use(cors())
+router.use(express.json())
+router.use(morgan('dev'))
+
+router.use('/blogs', BlogsAPI)
+router.use('/tags', TagsAPI)
+
+router.use('/login/luke', (req, res) => { })
+
+router.use('*', (req, res) => {
+    res.status(404).json('Unknown endpoint!')
+})
+
+export default router
