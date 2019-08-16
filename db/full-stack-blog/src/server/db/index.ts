@@ -1,4 +1,4 @@
-import knex from 'knex'
+import * as knex from 'knex'
 // const knex = require('knex')
 
 // Fine, I relent on the bad punny name

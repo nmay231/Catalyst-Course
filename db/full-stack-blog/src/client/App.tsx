@@ -1,46 +1,29 @@
-import * as React from 'react';
-import axios from 'axios'
+import * as React from 'react'
+import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-dom'
 
-import './scss/app';
+import HomePage from './views/HomePage'
+// import LoginPage from './views/LoginPage'
+// import WriteBlog from './views/WriteBlogPage'
+import ViewBlogPage from './views/ViewBlogPage'
 
-export default class App extends React.Component<IAppProps, IAppState> {
+import Navigation from './components/Navigation'
 
-    constructor(props: IAppProps) {
-        super(props);
-
-        this.state = { name: null };
-    }
-
-    async componentWillMount() {
-        // let test = await axios.get('/api/hello')
-        // console.log(test.data)
-        // this.setState({ name: test.data })
-    }
-
-    componentDidMount() {
-        // let input = document.querySelector('')
-    }
-
-    render() {
-        return (
-            <main className="container">
-                <h1 className="covalence-blue">Hello {this.state.name}!</h1>
-                <div className="form-group">
-                    <div className="form-control">
-                        <input type="text" style={{ border: 'none', outline: 0, padding: 0, boxShadow: 'none', display: 'inline-block' }} autoFocus />
-                    </div>
-                    <input type="text" className="form-control" />
-                </div>
-                <h2></h2>
-            </main>
-        )
-    }
+const App: React.FC = () => {
+    return (
+        <Router>
+            <Navigation />
+            <div className="container">
+                <Switch>
+                    <Route exact path="/home" component={HomePage} />
+                    {/* <Route path="/login/as/luke" component={LoginPage} /> */}
+                    <Route exact path="/view/:blogid" component={ViewBlogPage} />
+                    {/* <Route path="/:blogid/edit" component={WriteBlog} /> */}
+                    {/* <Route path="/writeblog" component={WriteBlog} /> */}
+                    <Redirect exact strict from="/" to="/home" />
+                </Switch>
+            </div>
+        </Router>
+    )
 }
 
-interface IAppProps {
-
-}
-
-interface IAppState {
-    name: string;
-}
+export default App

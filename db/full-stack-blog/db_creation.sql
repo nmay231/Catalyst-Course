@@ -19,7 +19,8 @@ create table blogs (
 create table tags (
   id int not null primary key auto_increment,
   name varchar(50) not null,
-  _created datetime default current_timestamp
+  _created datetime default current_timestamp,
+  unique key name (name)
 );
 # drop table blogs_tags;
 create table blogs_tags (

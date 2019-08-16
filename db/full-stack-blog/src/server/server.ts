@@ -1,8 +1,9 @@
-import express from 'express'
-import helmet from 'helmet'
-import path from 'path'
+import * as express from 'express'
+import * as helmet from 'helmet'
+import * as path from 'path'
 
 import apiRouter from './routes'
+import morgan = require('morgan')
 
 if (!process.env.LOADED) {
     throw Error('".env" file not found! Please edit the dev.env or prod.env file in /config/')
@@ -10,6 +11,7 @@ if (!process.env.LOADED) {
 
 const app = express()
 app.use(helmet())
+app.use(morgan('dev'))
 
 app.use(express.static('public'))
 app.use('/api', apiRouter)

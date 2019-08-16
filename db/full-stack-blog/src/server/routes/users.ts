@@ -1,16 +1,17 @@
 import { Router } from 'express'
 
 import knextion from '../db'
+// authors(id, name, email, _created)
 
 let router = Router()
 
 router.get('/:id?', async (req, res) => {
     try {
         if (req.params.id) {
-            let blog = await knextion('blogs').where({ id: req.params.id }).select()
+            let blog = await knextion('authors').where({ id: req.params.id }).select()
             res.status(200).json(blog[0])
         } else {
-            let blogs = await knextion.select().from('blogs')
+            let blogs = await knextion.select().from('authors')
             res.status(200).json(blogs)
         }
     } catch (err) {
@@ -21,8 +22,8 @@ router.get('/:id?', async (req, res) => {
 
 router.post('/', async (req, res) => {
     try {
-        let { title, content, authorid } = req.body
-        await knextion('blogs').insert({ title, content, authorid })
+        let { name, email } = req.body
+        await knextion('authors').insert({ name, email })
         res.sendStatus(200)
     } catch (err) {
         console.error(err)
@@ -32,12 +33,8 @@ router.post('/', async (req, res) => {
 
 router.put('/:id', async (req, res) => {
     try {
-        let { title, content, authorid } = req.body
-        await knextion('blogs').where('id', req.params.id).update({
-            title,
-            content,
-            authorid,
-        })
+        let { name, email } = req.body
+        await knextion('authors').where('id', req.params.id).update({ name, email })
         res.sendStatus(200)
     } catch (err) {
         console.error(err)
@@ -46,8 +43,12 @@ router.put('/:id', async (req, res) => {
 })
 
 router.delete('/:id', async (req, res) => {
+    let id = req.params.id
     try {
-        await knextion('blogs').where('id', req.params.id).delete()
+        await knextion('blogs_tags').join('blogs', 'blogs.authorid', '=', id)
+            .where('blogs_tags.blogid', '=', 'blogs.id').del()
+        await knextion('blogs').where('authorid', '=', id).del()
+        await knextion('authors').where('id', '=', id).del()
         res.sendStatus(200)
     } catch (err) {
         console.error(err)
