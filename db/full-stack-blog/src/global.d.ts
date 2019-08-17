@@ -12,6 +12,17 @@ declare interface Blog {
     tagList?: string[],
 }
 
+declare interface IAuthor {
+    id: number,
+    name: string,
+    email: string,
+}
+
+declare interface ITag {
+    id: number,
+    name: string,
+}
+
 declare namespace myLib {
     //~ We can write 'myLib.timeout = 50;'
     let timeout: number;

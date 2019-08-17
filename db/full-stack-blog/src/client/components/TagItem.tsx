@@ -2,14 +2,26 @@ import * as React from 'react'
 
 interface ITagItem {
     text: string,
-    removeCallback?: (...args: any[]) => any
+    click?: (...args: any[]) => any,
+    remove?: (...args: any[]) => any,
 }
 
-const TagItem: React.FC<ITagItem> = ({ text, removeCallback }) => {
+const TagItem: React.FC<ITagItem> = ({ text, click, remove }) => {
+
+    const handleClick: React.MouseEventHandler = (e: React.MouseEvent<HTMLSpanElement>) => {
+        click()
+    }
+
+    let hover = click && {
+        cursor: 'pointer',
+    }
+
+    click = click || (() => { })
+
     return (
-        <span className="px-3 py-1 mx-2 my-1 text-nowrap border border-dark rounded-pill bg-light">
+        <span className="px-3 py-1 mx-2 my-1 text-nowrap border border-dark rounded-pill bg-light" style={hover} onClick={handleClick}>
             {text}
-            {removeCallback && <span className="ml-1 mr-n1" onClick={removeCallback} style={{ cursor: 'pointer' }}> &times; </span>}
+            {remove && <span className="ml-1 mr-n1" onClick={remove} style={{ cursor: 'pointer' }}> &times; </span>}
         </span>
     )
 }

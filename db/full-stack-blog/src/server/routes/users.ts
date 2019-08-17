@@ -5,6 +5,26 @@ import knextion from '../db'
 
 let router = Router()
 
+// Just poking some fun at my instructor =P
+router.get('/find-luke-lolololol', async (req, res) => {
+    try {
+        let allLukes = await knextion('authors').where('name', '=', 'Luke Skywalker').select()
+        console.log(allLukes)
+        if (allLukes.length) {
+            res.status(200).json(allLukes[0])
+        } else {
+            let id: number[] = await knextion('authors').insert({
+                name: 'Luke Skywalker',
+                email: 'lkskywalker@jediacademy.edu',
+            })
+            res.status(200).json((await knextion('authors').where({ id }).select())[0])
+        }
+    } catch (err) {
+        console.error(err)
+        res.sendStatus(500)
+    }
+})
+
 router.get('/:id?', async (req, res) => {
     try {
         if (req.params.id) {

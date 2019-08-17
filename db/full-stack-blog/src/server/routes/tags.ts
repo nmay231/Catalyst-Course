@@ -18,6 +18,21 @@ router.get('/:id?', async (req, res) => {
     }
 })
 
+router.get('/findlike/:tagpart', async (req, res) => {
+    let tagpart: string = req.params.tagpart
+    let max = parseInt(req.body.max) || 7
+    try {
+        let query = knextion('tags').where('name', 'like', '%' + tagpart + '%')
+            .orWhere('name', 'like', tagpart + '%').limit(max).select<ITag[]>('name')
+        res.status(200).json(
+            (await query).map(tag => tag.name)
+        )
+    } catch (err) {
+        console.error(err)
+        res.sendStatus(500)
+    }
+})
+
 router.post('/', async (req, res) => {
     try {
         let { tag, tags }: { tag: string, tags: string[] } = req.body

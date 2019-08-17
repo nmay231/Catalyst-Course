@@ -14,7 +14,7 @@ interface IMarkDown {
     className?: string,
 }
 
-const MarkDown: React.FC<IMarkDown> = ({ content, className = 'p-3' }) => {
+const MarkDown: React.FC<IMarkDown> = ({ content, className = '' }) => {
     return (
         <div className={className}>
             {ReactHTMLParser(converter.makeHtml(content))}
