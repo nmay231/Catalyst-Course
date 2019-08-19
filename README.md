@@ -1,5 +1,9 @@
 # Covalence Catalyst progress
 
+Monday, August 19, 2019
+---
+* Completed [full-stack Blog](https://github.com/nmay231/Catalyst-Course/tree/master/db/full-stack-blog) lab
+
 Sunday, August 11, 2019
 ---
 * Finally pushed course progress

@@ -1,5 +1,6 @@
 import * as React from 'react'
 import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-dom'
+import Axios from 'axios'
 
 import HomePage from './views/HomePage'
 import LoginPage from './views/LoginPage'
@@ -7,8 +8,7 @@ import WriteBlogPage from './views/WriteBlogPage'
 import ViewBlogPage from './views/ViewBlogPage'
 
 import Navigation from './components/Navigation'
-import Axios from 'axios'
-import { USERS_API, join } from './utils/apis';
+import { USERS_API, join } from './utils/apis'
 
 const App: React.FC = () => {
 
@@ -18,7 +18,6 @@ const App: React.FC = () => {
         try {
             (async () => {
                 let localid: string = localStorage.getItem('authorid')
-                console.log(localid)
                 if (localid) {
                     let final = (await Axios.get<IAuthor>(join(USERS_API, localid))).data.id
                     setAuthorid(final)
@@ -42,9 +41,9 @@ const App: React.FC = () => {
             <Navigation />
             <div className="container">
                 <Switch>
-                    <Route exact path="/home" component={HomePage} />
+                    <Route path="/home" component={HomePage} />
                     <Route path="/login/as/luke" component={() => <LoginPage setAuthorid={setAuthorid} />} />
-                    <Route exact path="/view/:blogid" component={ViewBlogPage} />
+                    <Route path="/view/:blogid" component={ViewBlogPage} />
                     <Route path="/edit/:blogid" component={() => <WriteBlogPage authorid={authorid} />} />
                     <Route path="/writeblog" component={() => <WriteBlogPage authorid={authorid} />} />
                     <Redirect exact strict from="/" to="/home" />

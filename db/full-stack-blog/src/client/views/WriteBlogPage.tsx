@@ -5,19 +5,20 @@ import ViewBlog from '../components/ViewBlog'
 import { withRouter, RouteComponentProps } from 'react-router'
 import Form from '../components/Form'
 import FormField from '../components/FormField'
-import TagBox from '../components/TagBox'
 import SearchTag from '../components/SearchTag'
 
-interface IWriteBlogPage extends RouteComponentProps {
+interface IWriteBlogPage extends RouteComponentProps<{ blogid: string }> {
     authorid: number | null,
 }
 
-const WriteBlogPage: React.FC<IWriteBlogPage> = ({ authorid, history }) => {
+const WriteBlogPage: React.FC<IWriteBlogPage> = ({ authorid, history, match }) => {
 
     if (authorid === -1) {
         history.replace('/login/as/luke')
         return <></>
     }
+
+    let blogid = match.params.blogid
 
     const [author, setAuthor] = React.useState<IAuthor>({
         id: 1,
@@ -43,14 +44,36 @@ const WriteBlogPage: React.FC<IWriteBlogPage> = ({ authorid, history }) => {
         }
     }, [authorid])
 
-    const postBlog = () => {
-        Axios.post<IAuthor>(BLOGS_API, {
-            authorid,
-            title,
-            content,
-            tags: tagList,
-        }).then(() => history.push('/'))
-            .catch((err) => console.error(err))
+    React.useEffect(() => {
+        if (!blogid) {
+            return
+        }
+        (async () => {
+            try {
+                let blog = (await Axios.get<Blog>(join(BLOGS_API, blogid))).data
+                let author = (await Axios.get<IAuthor>(join(USERS_API, blog.authorid.toString()))).data
+                setAuthor(author)
+                setTitle(blog.title)
+                setContent(blog.content)
+                setTagList(blog.tags.split(';;'))
+            } catch (err) {
+                console.log(err)
+            }
+        })()
+    }, [blogid])
+
+    const postBlog = async () => {
+        try {
+            let body = { authorid, title, content, tags: tagList }
+            if (blogid) {
+                await Axios.put(join(BLOGS_API, blogid), body)
+            } else {
+                await Axios.post(BLOGS_API, body)
+            }
+            history.push('/')
+        } catch (err) {
+            console.error(err)
+        }
     }
 
     if (!authorid) {
@@ -62,14 +85,10 @@ const WriteBlogPage: React.FC<IWriteBlogPage> = ({ authorid, history }) => {
     }
 
     return (
-        <section className="row d-flex align-items-stretch">
+        <section className="row d-flex mt-5">
             <Form submitText="Post Blog" action={postBlog}
-                className="col-lg-6 col-12 border rounded mx-auto mt-5 mb-n1" >
+                className="col-lg-6 col-12 border rounded mx-auto mt-2 mb-n1" >
                 <FormField state={[title, setTitle]} name="Title" />
-                {/* <FormField state={[tagSearch, setTagSearch]} name="Search for tags" /> */}
-                {/* <FormField state={[tags, setTags]} name="Tags" transform={findTags} /> */}
-                {/* <TagBox tags={['searching', 'tagbox', '(get this working)']} /> */}
-                {/* <TagBox tags={toList(tags)} /> */}
                 <SearchTag state={[tagList, setTagList]} hidden />
                 <FormField state={[content, setContent]} name="Post Content" type="textarea" />
             </Form>

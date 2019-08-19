@@ -24,7 +24,7 @@ const HomePage: React.FC = () => {
     return (
         <section className="row">
             <h1 className="text-center col-12 my-5">Blog Posts</h1>
-            {blogs.map((blog) => <ViewBlog key={blog.id} blog={blog} />)}
+            {blogs.map((blog) => <ViewBlog key={blog.id} blog={blog} preview />)}
         </section>
     )
 }
