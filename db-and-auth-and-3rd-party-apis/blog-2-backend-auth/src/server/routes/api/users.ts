@@ -1,9 +1,12 @@
 import { Router } from 'express'
 
-import knextion from '../db'
-// authors(id, name, email, _created)
+import knextion from '../../db'
+import { BearerStrategy, isUser, isAdmin } from './checkpoints'
+// authors(id, name, email, hash, role, _created)
 
 let router = Router()
+
+router.use(BearerStrategy())
 
 // Just poking some fun at my instructor =P
 router.get('/find-luke-lolololol', async (req, res) => {
@@ -25,14 +28,15 @@ router.get('/find-luke-lolololol', async (req, res) => {
     }
 })
 
-router.get('/:id?', async (req, res) => {
+router.get('/:id?', isUser, async (req, res) => {
     try {
         if (req.params.id) {
-            let blog = await knextion('authors').where({ id: req.params.id }).select()
-            res.status(200).json(blog[0])
+            let [author] = await knextion('authors').where({ id: req.params.id }).select<IAuthor[]>()
+            delete author.hash
+            res.status(200).json(author)
         } else {
-            let blogs = await knextion.select().from('authors')
-            res.status(200).json(blogs)
+            let authors = await knextion.select().from('authors')
+            res.status(200).json(authors.map(a => ({ ...a, hash: undefined })))
         }
     } catch (err) {
         console.error(err)
@@ -51,7 +55,7 @@ router.post('/', async (req, res) => {
     }
 })
 
-router.put('/:id', async (req, res) => {
+router.put('/:id', isUser, async (req, res) => {
     try {
         let { name, email } = req.body
         await knextion('authors').where('id', req.params.id).update({ name, email })
@@ -62,7 +66,7 @@ router.put('/:id', async (req, res) => {
     }
 })
 
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', isAdmin, async (req, res) => {
     let id = req.params.id
     try {
         await knextion('blogs_tags').join('blogs', 'blogs.authorid', '=', id)

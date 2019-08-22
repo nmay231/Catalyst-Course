@@ -1,8 +1,11 @@
 import * as express from 'express'
 import * as helmet from 'helmet'
+import * as cors from 'cors'
 import * as path from 'path'
+import * as passport from 'passport'
 
-import apiRouter from './routes'
+import './middlewares'
+import routes from './routes'
 import morgan = require('morgan')
 
 if (!process.env.LOADED) {
@@ -12,9 +15,12 @@ if (!process.env.LOADED) {
 const app = express()
 app.use(helmet())
 app.use(morgan('dev'))
+app.use(express.json())
+app.use(cors())
+app.use(passport.initialize())
 
 app.use(express.static('public'))
-app.use('/api', apiRouter)
+app.use(routes)
 
 app.use('*', (req, res) => res.sendFile(
     path.resolve(__dirname, '../public/index.html'),

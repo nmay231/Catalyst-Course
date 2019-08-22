@@ -1,9 +1,13 @@
 import { Router } from 'express'
 
-import knextion from '../db'
+import knextion from '../../db'
+import { isUser, isAdmin, BearerStrategy } from './checkpoints'
+import passport = require('passport');
 // tags(id, name, _created)
 
 let router = Router()
+
+router.use(BearerStrategy())
 
 router.get('/:id?', async (req, res) => {
     try {
@@ -18,7 +22,7 @@ router.get('/:id?', async (req, res) => {
     }
 })
 
-router.get('/findlike/:tagpart', async (req, res) => {
+router.get('/findlike/:tagpart', isUser, async (req, res) => {
     let tagpart: string = req.params.tagpart
     let max = parseInt(req.body.max) || 7
     try {
@@ -33,7 +37,7 @@ router.get('/findlike/:tagpart', async (req, res) => {
     }
 })
 
-router.post('/', async (req, res) => {
+router.post('/', isUser, async (req, res) => {
     try {
         let { tag, tags }: { tag: string, tags: string[] } = req.body
         if (tag) {
@@ -50,7 +54,7 @@ router.post('/', async (req, res) => {
     }
 })
 
-router.put('/:id', async (req, res) => {
+router.put('/:id', isAdmin, async (req, res) => {
     let id: number = req.params.id
     let name: string = req.body.name
     try {
@@ -62,7 +66,7 @@ router.put('/:id', async (req, res) => {
     }
 })
 
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', isAdmin, async (req, res) => {
     let id: number = req.params.id
     try {
         await knextion('blogs_tags').where('tagid', id).del()

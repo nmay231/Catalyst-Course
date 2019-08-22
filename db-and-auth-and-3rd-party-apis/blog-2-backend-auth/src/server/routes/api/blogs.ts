@@ -1,9 +1,13 @@
-import { Router } from 'express'
+import { Router, RequestHandler } from 'express'
+import * as passport from 'passport'
 
-import knextion from '../db'
+import knextion from '../../db'
+import { isUser, BearerStrategy } from './checkpoints'
 // blogs(id, title, content, authorid, _created)
 
 let router = Router()
+
+router.use(BearerStrategy())
 
 router.get('/:id?', async (req, res) => {
     let id: number = req.params.id
@@ -28,7 +32,7 @@ router.get('/:id?', async (req, res) => {
     }
 })
 
-router.post('/', async (req, res) => {
+router.post('/', isUser, async (req, res) => {
     try {
         let { title, content, authorid, tags }: { title: string, content: string, authorid: number, tags: string[] } = req.body
         let blogid = (await knextion('blogs').insert({ title, content, authorid }))[0]
@@ -48,7 +52,7 @@ router.post('/', async (req, res) => {
     }
 })
 
-router.put('/:id', async (req, res) => {
+router.put('/:id', isUser, async (req, res) => {
     try {
         let { title, content, authorid } = req.body
         await knextion('blogs').where('id', req.params.id).update({
@@ -63,7 +67,7 @@ router.put('/:id', async (req, res) => {
     }
 })
 
-router.put('/:id/addtags', async (req, res) => {
+router.put('/:id/addtags', isUser, async (req, res) => {
     try {
         let tags: string[] = req.body.tags
         let blogid: number = parseInt(req.params.id)
@@ -83,7 +87,7 @@ router.put('/:id/addtags', async (req, res) => {
     }
 })
 
-router.put('/:id/removetags', async (req, res) => {
+router.put('/:id/removetags', isUser, async (req, res) => {
     try {
         let tags: string[] = req.body.tags
         let blogid: number = parseInt(req.params.id)
@@ -97,7 +101,7 @@ router.put('/:id/removetags', async (req, res) => {
     }
 })
 
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', isUser, async (req, res) => {
     let id = req.params.id
     try {
         await knextion('blogs_tags').where('blogid', id).del()

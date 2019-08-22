@@ -15,9 +15,18 @@ declare interface IAuthor {
     id: number,
     name: string,
     email: string,
+    hash?: string,
+    role?: string,
 }
 
 declare interface ITag {
     id: number,
     name: string,
+}
+
+declare interface IPayload {
+    authorid: number,
+    expires?: Date,
+    tokenid?: number,
+    unique?: string,
 }
