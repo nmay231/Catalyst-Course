@@ -7,10 +7,12 @@ import { BLOGS_API, join } from '../utils/apis'
 import TagBox from '../components/TagBox'
 import MarkDown from '../components/MarkDown'
 
-const ViewBlogPage: React.FC<RouteComponentProps<{ blogid: string }>> = ({ match, history }) => {
+interface IViewBlogsPage extends RouteComponentProps<{ blogid: string }> { }
+
+const ViewBlogPage: React.FC<IViewBlogsPage> = ({ match, history }) => {
 
     let id = parseInt(match.params.blogid)
-    const [blog, setBlog] = React.useState<Blog>({
+    const [blog, setBlog] = React.useState<IBlog>({
         id: null,
         authorid: null,
         authorName: '',
@@ -23,7 +25,7 @@ const ViewBlogPage: React.FC<RouteComponentProps<{ blogid: string }>> = ({ match
     React.useEffect(() => {
         (async () => {
             try {
-                let rawBlog: Blog = (await Axios.get<Blog>(join(BLOGS_API, `${id}`))).data
+                let rawBlog = (await Axios.get<IBlog>(join(BLOGS_API, `${id}`))).data
                 setBlog(rawBlog.tags ? { ...rawBlog, tagList: rawBlog.tags.split(';;') } : { ...rawBlog, tagList: [] })
             } catch (err) {
                 console.error(err)

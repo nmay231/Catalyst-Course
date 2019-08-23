@@ -1,7 +1,7 @@
 // Project: Full-stack Blog
 // Definitions by: Noah May <https://github.com/nmay231>
 
-declare interface Blog {
+declare interface IBlog {
     id: number,
     authorid: number,
     authorName: string,

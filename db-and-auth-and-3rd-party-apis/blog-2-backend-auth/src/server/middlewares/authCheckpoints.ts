@@ -21,7 +21,7 @@ export const isUser: RequestHandler = (req, res, next) => {
 }
 
 export const isAdmin: RequestHandler = (req, res, next) => {
-    if (!req.user) {
+    if (!req.user || req.user.role !== 'admin') {
         return res.status(401).json('You must be an admin')
     } else {
         return next()

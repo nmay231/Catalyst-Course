@@ -5,12 +5,12 @@ import { BLOGS_API } from '../utils/apis'
 import ViewBlog from '../components/ViewBlog'
 
 const HomePage: React.FC = () => {
-    const [blogs, setBlogs] = React.useState<Blog[]>([])
+    const [blogs, setBlogs] = React.useState<IBlog[]>([])
 
     React.useEffect(() => {
         (async () => {
             try {
-                let rawBlogs: Blog[] = (await axios.get<Blog[]>(BLOGS_API)).data
+                let rawBlogs: IBlog[] = (await axios.get<IBlog[]>(BLOGS_API)).data
                 setBlogs(rawBlogs.map(b => ({
                     ...b,
                     tagList: b.tags ? b.tags.split(';;') : [],

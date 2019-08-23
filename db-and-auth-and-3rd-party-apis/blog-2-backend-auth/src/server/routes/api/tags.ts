@@ -1,8 +1,7 @@
 import { Router } from 'express'
 
 import knextion from '../../db'
-import { isUser, isAdmin, BearerStrategy } from './checkpoints'
-import passport = require('passport');
+import { isUser, isAdmin, BearerStrategy } from '../../middlewares/authCheckpoints'
 // tags(id, name, _created)
 
 let router = Router()
@@ -10,9 +9,13 @@ let router = Router()
 router.use(BearerStrategy())
 
 router.get('/:id?', async (req, res) => {
+    let id: number = parseInt(req.params.id)
+    if (!id) {
+        return res.status(422).json('Invalid `id`')
+    }
     try {
-        if (req.params.id) {
-            res.status(200).json(await knextion('tags').where('id', req.params.id).select())
+        if (id) {
+            res.status(200).json(await knextion('tags').where({ id }).select())
         } else {
             res.status(200).json(await knextion('tags').select())
         }
@@ -24,10 +27,10 @@ router.get('/:id?', async (req, res) => {
 
 router.get('/findlike/:tagpart', isUser, async (req, res) => {
     let tagpart: string = req.params.tagpart
-    let max = parseInt(req.body.max) || 7
+    let maxResults = parseInt(req.body.maxResults) || 7
     try {
         let query = knextion('tags').where('name', 'like', '%' + tagpart + '%')
-            .orWhere('name', 'like', tagpart + '%').limit(max).select<ITag[]>('name')
+            .orWhere('name', 'like', tagpart + '%').limit(maxResults).select<ITag[]>('name')
         res.status(200).json(
             (await query).map(tag => tag.name)
         )
@@ -45,7 +48,7 @@ router.post('/', isUser, async (req, res) => {
         } else if (tags) {
             await knextion('tags').insert(tags.map(name => ({ name })))
         } else {
-            return res.status(400).json('Missing `tag` or `tags` in body')
+            return res.status(422).json('Missing `tag` or `tags` in body')
         }
         res.sendStatus(200)
     } catch (err) {
@@ -57,8 +60,11 @@ router.post('/', isUser, async (req, res) => {
 router.put('/:id', isAdmin, async (req, res) => {
     let id: number = req.params.id
     let name: string = req.body.name
+    if (!id || !name) {
+        return res.status(422).json('Invalid `id` on endpoint or missing `name` in body')
+    }
     try {
-        await knextion('tags').where('id', id).update({ name })
+        await knextion('tags').where({ id }).update({ name })
         res.sendStatus(200)
     } catch (err) {
         console.error(err)
@@ -68,9 +74,12 @@ router.put('/:id', isAdmin, async (req, res) => {
 
 router.delete('/:id', isAdmin, async (req, res) => {
     let id: number = req.params.id
+    if (!id) {
+        return res.status(422).json('Invalid `id` on endpoint')
+    }
     try {
-        await knextion('blogs_tags').where('tagid', id).del()
-        await knextion('tags').where('id', id).del()
+        await knextion('blogs_tags').where({ 'tagid': id }).del()
+        await knextion('tags').where({ id }).del()
         res.sendStatus(200)
     } catch (err) {
         console.error(err)

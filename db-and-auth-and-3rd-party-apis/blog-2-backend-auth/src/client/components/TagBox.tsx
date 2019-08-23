@@ -4,8 +4,8 @@ import TagItem from './TagItem'
 
 interface ITagBox {
     tags: string[],
-    clickers?: Array<(...args: any[]) => any>,
-    removers?: Array<(...args: any[]) => any>,
+    clickers?: Array<(...args: any[]) => void>,
+    removers?: Array<(...args: any[]) => void>,
 }
 
 const TagBox: React.FC<ITagBox> = ({ tags, clickers, removers }) => {

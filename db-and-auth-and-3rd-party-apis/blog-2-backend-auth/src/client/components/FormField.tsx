@@ -1,6 +1,6 @@
 import * as React from 'react'
 
-interface FormFieldProps extends React.Props<{}> {
+interface IFormFieldProps extends React.Props<{}> {
     state: [
         string | number,
         (newValue: string) => void,
@@ -10,7 +10,7 @@ interface FormFieldProps extends React.Props<{}> {
     transform?: (value: string) => string
 }
 
-const FormField: React.FC<FormFieldProps> = ({ state, name, type = 'text', transform }) => {
+const FormField: React.FC<IFormFieldProps> = ({ state, name, type = 'text', transform }) => {
 
     const [value, setValue] = state
 

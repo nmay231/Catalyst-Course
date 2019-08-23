@@ -1,8 +1,7 @@
-import { Router, RequestHandler } from 'express'
-import * as passport from 'passport'
+import { Router } from 'express'
 
 import knextion from '../../db'
-import { isUser, BearerStrategy } from './checkpoints'
+import { isUser, BearerStrategy } from '../../middlewares/authCheckpoints'
 // blogs(id, title, content, authorid, _created)
 
 let router = Router()
@@ -20,10 +19,10 @@ router.get('/:id?', async (req, res) => {
             .select('b.*', { authorName: 'a.name', tags: knextion.raw('GROUP_CONCAT(?? separator ";;")', ['t.name']) })
 
         if (id) {
-            let blog: Blog = (await baseQuery.where('b.id', '=', id))[0]
+            let blog: IBlog = (await baseQuery.where('b.id', '=', id))[0]
             res.status(200).json(blog)
         } else {
-            let blogs: Blog[] = await baseQuery.groupBy('b.id')
+            let blogs: IBlog[] = await baseQuery.groupBy('b.id')
             res.status(200).json(blogs)
         }
     } catch (err) {
@@ -54,7 +53,7 @@ router.post('/', isUser, async (req, res) => {
 
 router.put('/:id', isUser, async (req, res) => {
     try {
-        let { title, content, authorid } = req.body
+        let { title, content, authorid }: { title: string, content: string, authorid: number } = req.body
         await knextion('blogs').where('id', req.params.id).update({
             title,
             content,
@@ -92,7 +91,6 @@ router.put('/:id/removetags', isUser, async (req, res) => {
         let tags: string[] = req.body.tags
         let blogid: number = parseInt(req.params.id)
         let tagids = await knextion('tags').whereIn('name', tags).select<Array<{ id: number }>>('id')
-        console.log(tagids)
         await knextion('blogs_tags').where({ blogid }).whereIn('tagid', tagids.map(obj => obj.id)).del()
         res.sendStatus(200)
     } catch (err) {

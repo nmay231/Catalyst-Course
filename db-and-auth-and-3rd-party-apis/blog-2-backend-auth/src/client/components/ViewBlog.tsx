@@ -5,7 +5,7 @@ import TagBox from './TagBox'
 import MarkDown from './MarkDown'
 
 interface IViewBlog {
-    blog: Blog,
+    blog: IBlog,
     preview?: boolean,
     className?: string,
 }
