@@ -1,5 +1,13 @@
 # Covalence Catalyst progress
 
+Friday, August 23, 2019
+---
+* Cleaned up blog code a bit and started securing the frontend
+
+Thursday, August 22, 2019
+---
+* Finished implementing backend auth [for the blog](https://github.com/nmay231/Catalyst-Course/tree/master/db-and-auth-and-3rd-party-apis/blog-2-backend-auth)
+
 Monday, August 19, 2019
 ---
 * Completed [full-stack Blog](https://github.com/nmay231/Catalyst-Course/tree/master/db/full-stack-blog) lab
