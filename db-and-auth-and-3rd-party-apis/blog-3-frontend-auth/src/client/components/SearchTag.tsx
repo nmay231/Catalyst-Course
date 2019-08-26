@@ -1,10 +1,10 @@
 import * as React from 'react'
-import Axios from 'axios'
 import * as _ from 'lodash'
 
 import FormField from './FormField'
 import TagBox from './TagBox'
 import { TAGS_API, join } from '../utils/apis'
+import useLogin from '../utils/useLogin'
 
 interface ISearchTag {
     state: [
@@ -16,6 +16,8 @@ interface ISearchTag {
 
 const SearchTag: React.FC<ISearchTag> = ({ state: [tagList, setTagList], hidden }) => {
 
+    const { json } = useLogin()
+
     const [hide, setHide] = React.useState<boolean>(Boolean(hidden))
 
     const [tagSearch, setTagSearch] = React.useState('')
@@ -25,7 +27,7 @@ const SearchTag: React.FC<ISearchTag> = ({ state: [tagList, setTagList], hidden 
         (async () => {
             if (tagSearch.length && tagSearch !== '-') {
                 let createTag = tagSearch.endsWith('-') ? tagSearch.slice(0, tagSearch.length - 1) : tagSearch
-                let foundTags = (await Axios.get(join(TAGS_API, 'findlike', tagSearch))).data
+                let foundTags = await json<string[]>(join(TAGS_API, 'findlike', tagSearch))
                 setSearching(_.union(_.difference(foundTags, [...tagList, createTag]), [createTag]))
             } else {
                 setSearching([])
@@ -34,14 +36,14 @@ const SearchTag: React.FC<ISearchTag> = ({ state: [tagList, setTagList], hidden 
     }, [tagSearch, tagList])
 
     const sanitizeTag = (s: string) => s.replace(' ', '-').replace('--', '-').toLowerCase()
-    const addTag = async (tag: string, isNew?: boolean) => {
+
+    const addTag = async (tag: string) => {
         setTagList([...tagList, tag])
         setTagSearch('')
-        if (isNew) {
-            await Axios.post(TAGS_API, { tag })
-        }
+        await json(TAGS_API, 'POST', { tag })
 
     }
+
     const removeTag = (tag: string) => {
         setTagList(tagList.filter(t => t !== tag))
     }
@@ -63,7 +65,7 @@ const SearchTag: React.FC<ISearchTag> = ({ state: [tagList, setTagList], hidden 
         <>
             <FormField state={[tagSearch, setTagSearch]} name="Search for Tags" transform={sanitizeTag} />
             {searching.length
-                ? <TagBox tags={searching} clickers={searching.map((search, i, arr) => () => addTag(search, i === arr.length - 1))} />
+                ? <TagBox tags={searching} clickers={searching.map(search => () => addTag(search))} />
                 : <p>Start typing to see available tags (or create your own!)</p>}
             <TagBox tags={tagList}
                 removers={tagList.map(tag => () => removeTag(tag))} />

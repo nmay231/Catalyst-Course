@@ -43,13 +43,18 @@ router.get('/findlike/:tagpart', isUser, async (req, res) => {
 router.post('/', isUser, async (req, res) => {
     try {
         let { tag, tags }: { tag: string, tags: string[] } = req.body
-        if (tag) {
-            await knextion('tags').insert({ name: tag })
-        } else if (tags) {
-            await knextion('tags').insert(tags.map(name => ({ name })))
-        } else {
+        if (!tags && !tag) {
             return res.status(422).json('Missing `tag` or `tags` in body')
+        } else if (!tags) {
+            tags = [tag]
+        } else {
+            tags = [...tags, tag]
         }
+
+        let query = knextion('tags').insert(tags.map(name => { name }))
+        // The only current way to ignore duplicate insert errors
+        await knextion.raw(query.toQuery().replace('insert', 'insert ignore'))
+
         res.sendStatus(200)
     } catch (err) {
         console.error(err)

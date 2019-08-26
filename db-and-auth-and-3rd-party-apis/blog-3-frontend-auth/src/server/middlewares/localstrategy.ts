@@ -8,7 +8,6 @@ passport.use(new localStategy.Strategy({
     passwordField: 'password',
     session: false,
 }, async (email, password, done) => {
-    console.log('yellow')
     try {
         if (!email) {
             return done(null, false)

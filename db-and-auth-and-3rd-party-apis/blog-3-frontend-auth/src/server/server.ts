@@ -14,10 +14,13 @@ if (!process.env.LOADED) {
 
 const app = express()
 app.use(helmet())
-app.use(morgan('dev'))
 app.use(express.json())
 app.use(cors())
 app.use(passport.initialize())
+
+app.use(morgan('dev', {
+    skip: (req, res) => req.originalUrl.match(/\/api\/tags\/findlike\/[a-b0-9]+/) !== null,
+}))
 
 app.use(express.static('public'))
 app.use(routes)

@@ -7,7 +7,7 @@ interface IFormFieldProps extends React.Props<{}> {
     ]
     name: string,
     type?: 'text' | 'password' | 'textarea',
-    transform?: (value: string) => string
+    transform?: (value: string) => string,
 }
 
 const FormField: React.FC<IFormFieldProps> = ({ state, name, type = 'text', transform }) => {
@@ -19,14 +19,16 @@ const FormField: React.FC<IFormFieldProps> = ({ state, name, type = 'text', tran
         setValue(newValue)
     }
 
+    const fieldId = name.split(' ').join('')
+
     return (
         <div className="form-group">
             <div className="form-group m-3">
-                <label htmlFor={name}> {name} </label>
+                <label htmlFor={fieldId}> {name} </label>
                 {type === 'textarea' ?
-                    <textarea rows={15} id={name} className="form-control"
+                    <textarea rows={15} id={fieldId} className="form-control"
                         value={value} onChange={handleChange} />
-                    : <input type={type} id={name} className="form-control"
+                    : <input type={type} id={fieldId} className="form-control"
                         value={value} onChange={handleChange} />}
             </div>
         </div>

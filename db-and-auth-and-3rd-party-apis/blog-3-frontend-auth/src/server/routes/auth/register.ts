@@ -6,7 +6,7 @@ import { CreateToken } from '../../utils/security/tokens';
 
 const router = Router()
 
-router.post('/', async (req, res, next) => {
+router.post('/', async (req, res) => {
     try {
         let body = req.body
         if (!body || !body.email || !body.password || !body.name) {
