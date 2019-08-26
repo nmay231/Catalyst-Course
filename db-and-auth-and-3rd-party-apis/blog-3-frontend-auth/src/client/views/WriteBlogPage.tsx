@@ -4,8 +4,8 @@ import { withRouter, RouteComponentProps } from 'react-router'
 import { join, BLOGS_API, AUTHORS_API } from '../utils/apis'
 import useLogin from '../utils/useLogin'
 import ViewBlog from '../components/ViewBlog'
-import Form from '../components/Form'
-import FormField from '../components/FormField'
+import Form from '../components/commons/Form'
+import FormField from '../components/commons/FormField'
 import SearchTag from '../components/SearchTag'
 
 interface IWriteBlogPage extends RouteComponentProps<{ blogid?: string }> { }

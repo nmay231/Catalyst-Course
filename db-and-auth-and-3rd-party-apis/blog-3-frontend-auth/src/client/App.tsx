@@ -6,7 +6,7 @@ import LoginPage from './views/LoginPage'
 import WriteBlogPage from './views/WriteBlogPage'
 import ViewBlogPage from './views/ViewBlogPage'
 
-import { LoginProvider, LoginSubscriber } from './components/LoginContext'
+import { LoginProvider, LoginSubscriber } from './components/context/LoginContext'
 import Navigation from './components/Navigation'
 
 const App: React.FC = () => {

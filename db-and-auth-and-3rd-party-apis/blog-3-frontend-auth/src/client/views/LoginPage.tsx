@@ -2,8 +2,8 @@ import * as React from 'react'
 import { RouteComponentProps, withRouter } from 'react-router'
 
 import useLogin from '../utils/useLogin'
-import Form from '../components/Form'
-import FormField from '../components/FormField'
+import Form from '../components/commons/Form'
+import FormField from '../components/commons/FormField'
 
 interface ILoginPage extends RouteComponentProps {
     registering?: boolean,

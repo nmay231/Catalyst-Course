@@ -1,7 +1,7 @@
 import * as React from 'react'
 import Axios from 'axios'
 import { Method } from 'axios'
-import { LoginContext } from '../components/LoginContext'
+import { LoginContext } from '../components/context/LoginContext'
 import { LOGIN_ENDPOINT, REGISTER_ENDPOINT } from './apis'
 
 const useLogin = () => {

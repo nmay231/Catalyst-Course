@@ -5,8 +5,8 @@ import * as moment from 'moment'
 
 import { BLOGS_API, join } from '../utils/apis'
 import useLogin from '../utils/useLogin'
-import TagBox from '../components/TagBox'
-import MarkDown from '../components/MarkDown'
+import TagBox from '../components/commons/TagBox'
+import MarkDown from '../components/commons/MarkDown'
 
 interface IViewBlogsPage extends RouteComponentProps<{ blogid: string }> { }
 

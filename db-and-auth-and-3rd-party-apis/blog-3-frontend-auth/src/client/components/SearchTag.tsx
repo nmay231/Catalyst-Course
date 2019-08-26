@@ -1,8 +1,8 @@
 import * as React from 'react'
 import * as _ from 'lodash'
 
-import FormField from './FormField'
-import TagBox from './TagBox'
+import FormField from './commons/FormField'
+import TagBox from './commons/TagBox'
 import { TAGS_API, join } from '../utils/apis'
 import useLogin from '../utils/useLogin'
 

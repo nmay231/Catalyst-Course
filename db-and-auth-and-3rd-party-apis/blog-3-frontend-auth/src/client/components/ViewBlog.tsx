@@ -2,8 +2,8 @@ import * as React from 'react'
 import { Link } from 'react-router-dom'
 import * as moment from 'moment'
 
-import TagBox from './TagBox'
-import MarkDown from './MarkDown'
+import TagBox from './commons/TagBox'
+import MarkDown from './commons/MarkDown'
 
 interface IViewBlog {
     blog: IBlog,
