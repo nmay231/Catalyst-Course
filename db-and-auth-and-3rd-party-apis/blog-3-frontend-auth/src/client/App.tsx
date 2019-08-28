@@ -6,6 +6,7 @@ import MyTimelinePage from './views/MyTimelinePage'
 import LoginPage from './views/LoginPage'
 import WriteBlogPage from './views/WriteBlogPage'
 import ViewBlogPage from './views/ViewBlogPage'
+import _404Page from './views/_404Page'
 
 import { LoginProvider, LoginSubscriber } from './components/context/LoginContext'
 import { AlertProvider, AlertContainer } from './components/context/AlertContext'
@@ -30,6 +31,7 @@ const App: React.FC = () => {
                             <Route path="/edit/:blogid" component={WriteBlogPage} />
                             <Route path="/writeblog" component={WriteBlogPage} />
                             <Redirect exact from="/" to="/home" />
+                            <Route path="/" component={_404Page} />
                         </Switch>
                     </main>
                 </AlertProvider>
