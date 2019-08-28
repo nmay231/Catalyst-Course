@@ -1,5 +1,6 @@
 import * as React from 'react'
 import { withRouter, RouteComponentProps } from 'react-router'
+import * as _ from 'lodash'
 
 import { join, BLOGS_API, AUTHORS_API } from '../utils/apis'
 import useLogin from '../utils/useLogin'
@@ -61,11 +62,21 @@ const WriteBlogPage: React.FC<IWriteBlogPage> = ({ history, match }) => {
 
     const postBlog = async () => {
         try {
-            let body = { authorid: user.authorid, title, content, tags: tagList }
+            let body = { authorid: user.authorid, title, content }
             if (blogid) {
                 await json(join(BLOGS_API, `${blogid}`), 'PUT', body)
+                let blog = await json<IBlog>(join(BLOGS_API, `${blogid}`))
+                let oldTags = blog.tags.split(';;')
+                if (!_.isEqual(tagList.sort(), oldTags.sort())) {
+                    await json(join(BLOGS_API, `${blogid}`, 'removetags'), 'PUT',
+                        { tags: oldTags }
+                    )
+                    await json(join(BLOGS_API, `${blogid}`, 'addtags'), 'PUT',
+                        { tags: tagList }
+                    )
+                }
             } else {
-                await json(BLOGS_API, 'POST', body)
+                await json(BLOGS_API, 'POST', { ...body, tags: tagList })
             }
             history.push('/')
         } catch (err) {

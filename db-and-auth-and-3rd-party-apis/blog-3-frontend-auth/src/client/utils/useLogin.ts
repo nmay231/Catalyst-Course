@@ -70,6 +70,10 @@ const useLogin = () => {
         register,
         loginFromCache,
         json,
+
+        isLoggedIn: Boolean(user.role && user.token),
+        isAdmin: Boolean(user.role === 'admin'),
+        isUser: (authorid: number) => user.authorid === authorid,
     }
 }
 

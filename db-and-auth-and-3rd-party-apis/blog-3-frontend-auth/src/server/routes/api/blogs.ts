@@ -9,7 +9,13 @@ let router = Router()
 router.use(BearerStrategy())
 
 router.get('/:id?', async (req, res) => {
+
     let id: number = req.params.id
+    let authorid: number
+    if (req.query && req.query.authorid) {
+        authorid = parseInt(req.query.authorid)
+    }
+
     try {
 
         let baseQuery = knextion({ b: 'blogs' }) // Grab all blog data
@@ -17,6 +23,10 @@ router.get('/:id?', async (req, res) => {
             .leftJoin({ t: 'tags' }, 't.id', '=', 'bt.tagid') // Grab the tags as a ';;'-separated string
             .join({ a: 'authors' }, 'a.id', '=', 'b.authorid') // Get the authorName
             .select('b.*', { authorName: 'a.name', tags: knextion.raw('GROUP_CONCAT(?? separator ";;")', ['t.name']) })
+
+        if (authorid) {
+            baseQuery = baseQuery.where({ 'b.authorid': authorid })
+        }
 
         if (id) {
             let blog: IBlog = (await baseQuery.where('b.id', '=', id))[0]

@@ -10,12 +10,9 @@ router.use(BearerStrategy())
 
 router.get('/:id?', async (req, res) => {
     let id: number = parseInt(req.params.id)
-    if (!id) {
-        return res.status(422).json('Invalid `id`')
-    }
     try {
         if (id) {
-            res.status(200).json(await knextion('tags').where({ id }).select())
+            res.status(200).json((await knextion('tags').where({ id }).select())[0])
         } else {
             res.status(200).json(await knextion('tags').select())
         }
