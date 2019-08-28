@@ -3,8 +3,9 @@ import { Link } from 'react-router-dom'
 import { RouteComponentProps, withRouter } from 'react-router'
 import * as moment from 'moment'
 
-import { BLOGS_API, join } from '../utils/apis'
 import useLogin from '../utils/useLogin'
+import useSystemAlert from '../utils/useSystemAlert'
+import { BLOGS_API, join } from '../utils/apis'
 import TagBox from '../components/commons/TagBox'
 import MarkDown from '../components/commons/MarkDown'
 
@@ -13,6 +14,7 @@ interface IViewBlogsPage extends RouteComponentProps<{ blogid: string }> { }
 const ViewBlogPage: React.FC<IViewBlogsPage> = ({ match, history }) => {
 
     const { user, json } = useLogin()
+    const { pushAlert } = useSystemAlert()
 
     let id = parseInt(match.params.blogid)
     const [blog, setBlog] = React.useState<IBlog>({
@@ -31,7 +33,7 @@ const ViewBlogPage: React.FC<IViewBlogsPage> = ({ match, history }) => {
                 let rawBlog = await json<IBlog>(join(BLOGS_API, `${id}`))
                 setBlog(rawBlog.tags ? { ...rawBlog, tagList: rawBlog.tags.split(';;') } : { ...rawBlog, tagList: [] })
             } catch (err) {
-                console.error(err)
+                pushAlert({ content: 'It seems this blog is being tricky. Please try again later when our servers are online.', type: 'danger' })
             }
         })()
     }, [id])

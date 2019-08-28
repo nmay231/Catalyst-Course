@@ -3,7 +3,7 @@ import * as React from 'react'
 import SystemAlert, { ISystemAlert } from '../commons/SystemAlert'
 
 // Basically, this context holds two states and their setter functions
-// Typescript just makes it fun
+// Typescript just makes it look fun
 const AlertContext = React.createContext<[
     { [key: string]: ISystemAlert },
     React.Dispatch<React.SetStateAction<{ [key: string]: ISystemAlert }>>,

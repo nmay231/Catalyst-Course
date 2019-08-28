@@ -3,12 +3,12 @@
 // I've done so much with scss =P
 
 .alert-fadein {
-    animation: fadeIn 500ms;
+    animation: fadeIn 500ms ease-out;
     opacity: 1;
 }
 
 .alert-fadeout {
-    animation: fadeOut 400ms;
+    animation: fadeOut 400ms ease-in;
     opacity: 0;
 }
 

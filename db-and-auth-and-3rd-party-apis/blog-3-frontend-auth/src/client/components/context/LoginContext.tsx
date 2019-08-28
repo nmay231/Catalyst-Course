@@ -2,7 +2,7 @@ import * as React from 'react'
 import useLogin from '../../utils/useLogin'
 
 export const LoginContext = React.createContext<[IToken, React.Dispatch<React.SetStateAction<IToken>>]>(
-    [{ authorid: null, token: undefined, role: 'guest' }, () => { console.log('yellow') }]
+    [{ authorid: null, token: undefined, role: 'guest' }, () => { console.log('You should never see this') }]
 )
 
 export const LoginProvider: React.FC = ({ children }) => {
@@ -18,13 +18,13 @@ export const LoginProvider: React.FC = ({ children }) => {
 
 export const LoginSubscriber: React.FC = () => {
 
-    const { loginFromCache, user } = useLogin()
+    const { loginFromCache } = useLogin()
 
     React.useEffect(() => {
         try {
             loginFromCache()
         } catch (err) {
-            console.error(err)
+            // Should fail silently for the user
         }
     }, [])
 

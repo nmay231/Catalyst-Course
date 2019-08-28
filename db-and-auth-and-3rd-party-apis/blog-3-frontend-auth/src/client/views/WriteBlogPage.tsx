@@ -2,8 +2,10 @@ import * as React from 'react'
 import { withRouter, RouteComponentProps } from 'react-router'
 import * as _ from 'lodash'
 
-import { join, BLOGS_API, AUTHORS_API } from '../utils/apis'
 import useLogin from '../utils/useLogin'
+import useSystemAlert from '../utils/useSystemAlert'
+import { join, BLOGS_API, AUTHORS_API } from '../utils/apis'
+
 import ViewBlog from '../components/ViewBlog'
 import Form from '../components/commons/Form'
 import FormField from '../components/commons/FormField'
@@ -14,6 +16,7 @@ interface IWriteBlogPage extends RouteComponentProps<{ blogid?: string }> { }
 const WriteBlogPage: React.FC<IWriteBlogPage> = ({ history, match }) => {
 
     const { user, json } = useLogin()
+    const { pushAlert } = useSystemAlert()
 
     if (user.authorid === -1) {
         history.replace('/login')
@@ -54,7 +57,7 @@ const WriteBlogPage: React.FC<IWriteBlogPage> = ({ history, match }) => {
                     setContent(blog.content)
                     setTagList(blog.tags.split(';;'))
                 } catch (err) {
-                    console.log(err)
+                    pushAlert({ content: 'It seems we are having difficulties communicating with the server deities. Please try again later.', type: 'danger' })
                 }
             })()
         }
@@ -80,13 +83,13 @@ const WriteBlogPage: React.FC<IWriteBlogPage> = ({ history, match }) => {
             }
             history.push('/')
         } catch (err) {
-            console.error(err)
+            pushAlert({ content: 'Our servers couldn\'t handle your blog\'s greatness. Please try again later.', type: 'danger' })
         }
     }
 
     if (!user.authorid) {
         return (
-            <div className="spinner-border mt-5" role="status">
+            <div className="spinner-border mt-5 mx-auto" role="status">
                 <span className="sr-only">Loading...</span>
             </div>
         )
