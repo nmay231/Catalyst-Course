@@ -1,21 +1,23 @@
 # Miscellaneous list of (possibly ambitious) TODOs and projects
 
-**Bolded tasks** mean they're complete.
+**Bolded tasks** are completed.
 
 * Build up more features in the Chirper App
     * Include *actual* authentication
-    * Add a mobile version
+    * Adapt to be mobile friendly
 
 * Put together a list of keystone projects from throughout the course
     * `Just My Type` (Intermediate JS)
     * `Dicey Business` and `Shape Up or Shape Out` (Advanced JS)
     * `Building APIs` (Backend Development)
+    * `Chirper` (React and Typescript)
+    * `My Public Blog` (DB and Authentication)
 
 * Graduate!
 
 ## After graduation...
 
 * Consolidate keystone projects into a website or something
-* Create a branch off of master for all modifications post-graduation
+* Branch off of master for all modifications to labs post-graduation
 * Bug fix (and *maybe* unit test) all keystone projects
-* Convert some old keystone projects to Typescript
+* Maybe find a job? That might be optional...

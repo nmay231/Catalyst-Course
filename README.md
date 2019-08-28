@@ -1,5 +1,15 @@
 # Covalence Catalyst progress
 
+Tuesday, August 27, 2019
+---
+* Discovered a few ways to insert xss-attacks into the blog (I should remedy that at some point)
+* Added that to the todo list
+* Added system-wide alerts to the blog
+
+Monday, August 26, 2019
+---
+* Secured the frontend therefore completing the requirements for the [lab](https://github.com/nmay231/Catalyst-Course/tree/master/db-and-auth-and-3rd-party-apis/blog-3-frontend-auth)
+
 Friday, August 23, 2019
 ---
 * Cleaned up blog code a bit and started securing the frontend
