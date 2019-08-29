@@ -1,8 +1,9 @@
 import * as React from 'react'
 import { Link } from 'react-router-dom'
+import * as moment from 'moment'
 
-import TagBox from './TagBox'
-import MarkDown from './MarkDown'
+import TagBox from './commons/TagBox'
+import MarkDown from './commons/MarkDown'
 
 interface IViewBlog {
     blog: IBlog,
@@ -25,9 +26,12 @@ const ViewBlog: React.FC<IViewBlog> = ({ blog, preview = true, className }) => {
             <article className="card my-2 shadow rounded-lg" style={preview ? { height: 450 } : {}}>
                 <div className="card-header d-flex flex-column">
                     <h3 className="card-title ml-4 mt-2">{blog.title}</h3>
-                    <small className="text-muted ml-auto mr-lg-5">
-                        by {blog.authorName}
-                    </small>
+                    <div className="d-flex flex-row" id="meta-data">
+                        <small className="text-muted ml-auto mr-lg-5">
+                            by {blog.authorName}
+                            {blog._created ? ' — ' + moment(blog._created).format('D MMMM[,] YY') : ''}
+                        </small>
+                    </div>
                     <TagBox tags={blog.tagList} />
                 </div>
                 <div className="card-body d-flex flex-column">

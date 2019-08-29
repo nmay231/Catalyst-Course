@@ -65,7 +65,7 @@ router.post('/', async (req, res) => {
 
 router.put('/:id', isUser, async (req, res) => {
     let { name, email }: { name: string, email: string } = req.body
-    if (!name || !email) {
+    if (!name && !email) {
         return res.status(422).json('Missing `name` or `email` in body')
     }
     let id: number = parseInt(req.params.id)
@@ -90,6 +90,7 @@ router.delete('/:id', isAdmin, async (req, res) => {
         await knextion('blogs_tags').join('blogs', { 'blogs.authorid': id })
             .where('blogs_tags.blogid', '=', 'blogs.id').del()
         await knextion('blogs').where({ authorid: id }).del()
+        await knextion('tokens').where({ authorid: id }).del()
         await knextion('authors').where({ id }).del()
         res.sendStatus(200)
     } catch (err) {

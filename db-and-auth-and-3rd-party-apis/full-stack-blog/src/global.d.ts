@@ -1,6 +1,12 @@
 // Project: Full-stack Blog
 // Definitions by: Noah May <https://github.com/nmay231>
 
+declare interface IToken {
+    token: string,
+    authorid: number,
+    role: 'guest' | 'admin',
+}
+
 declare interface IBlog {
     id: number,
     authorid: number,
@@ -9,6 +15,7 @@ declare interface IBlog {
     content: string,
     tags: string | null,
     tagList?: string[],
+    _created?: Date,
 }
 
 declare interface IAuthor {

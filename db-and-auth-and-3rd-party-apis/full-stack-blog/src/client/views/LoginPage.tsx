@@ -1,30 +1,74 @@
 import * as React from 'react'
 import { RouteComponentProps, withRouter } from 'react-router'
-import Axios from 'axios';
-import { AUTHORS_API, join } from '../utils/apis';
+
+import useLogin from '../utils/useLogin'
+import useSystemAlert from '../utils/useSystemAlert'
+import Form from '../components/commons/Form'
+import FormField from '../components/commons/FormField'
 
 interface ILoginPage extends RouteComponentProps {
-    setAuthorid: (...args: any[]) => any,
+    registering?: boolean,
 }
 
-const LoginPage: React.FC<ILoginPage> = ({ setAuthorid, history }) => {
+const LoginPage: React.FC<ILoginPage> = ({ history, registering }) => {
 
-    const handleLogin: React.MouseEventHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
-        e.preventDefault()
-        Axios.get(join(AUTHORS_API, 'find-luke-lolololol'))
-            .then((res) => {
-                setAuthorid(res.data.id)
-                history.push('/')
-            })
+    const { loginLocal, register } = useLogin()
+    const { pushAlert } = useSystemAlert()
+
+    const [firstName, setFirstName] = React.useState('')
+    const [lastName, setLastName] = React.useState('')
+    const [email, setEmail] = React.useState('')
+    const [password, setPassword] = React.useState('')
+    const [confirmPassword, setConfirmPassword] = React.useState('')
+
+
+    const handleLogin = () => {
+        if (!registering) {
+            loginLocal(email, password)
+                .then(success => {
+                    if (success) {
+                        history.push('/')
+                    } else {
+                        pushAlert({ content: 'Our jabberwocky didn\'t like your credentials. Please try again.', type: 'warning' })
+                    }
+                })
+        } else {
+            if (password !== confirmPassword) {
+                pushAlert({ content: 'We can\'t read your mind. Doublecheck your passwords are the same.', type: 'warning' })
+            }
+            register(firstName + ' ' + lastName, email, password)
+                .then(success => {
+                    if (success) {
+                        history.push('/writeblog')
+                    } else {
+                        pushAlert({ content: 'Our jabberwocky didn\'t like your credentials. Please try again.', type: 'warning' })
+                    }
+                })
+        }
     }
+
+    React.useEffect(() => {
+        try {
+            document.getElementById('FirstName').focus()
+        } catch (err) {
+            document.getElementById('Email').focus()
+        }
+    }, [])
 
     return (
         <section className="row d-flex">
-            <h1 className="text-center col-12 my-3">Login as Luke!</h1>
-            <h2 className="text-center col-12 my-3">He doesn't mind!</h2>
-            <h3 className="text-center col-12 my-3">Who needs security anyways!</h3>
-            <h4 className="text-center col-12 my-3">Besides, I'm only learning about authentication in the next section...</h4>
-            <button role="button" onClick={handleLogin} className="btn btn-success mx-auto">Just log right on in!</button>
+            <Form submitText={registering ? 'Register' : 'Login'} action={handleLogin} className="col-6 border rounded shadow-lg mt-5 mx-auto">
+                {registering && <>
+                    <FormField state={[firstName, setFirstName]} name="First Name" />
+                    <FormField state={[lastName, setLastName]} name="Last Name" />
+                    <hr />
+                </>}
+                <FormField state={[email, setEmail]} name="Email" />
+                <FormField state={[password, setPassword]} name="Password" type="password" />
+                {registering &&
+                    <FormField state={[confirmPassword, setConfirmPassword]} name="Confirm Password" type="password" />
+                }
+            </Form>
         </section>
     )
 }

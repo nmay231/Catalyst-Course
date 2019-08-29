@@ -1,13 +1,16 @@
 import { Router } from 'express'
 import * as passport from 'passport'
 
-import { CreateToken } from '../../utils/security/tokens'
+import { CreateToken, RecoverToken } from '../../utils/security/tokens'
 
 const router = Router()
 
-router.post('/', passport.authenticate('local'), async (req, res, next) => {
+router.post('/', passport.authenticate('local'), async (req, res) => {
     try {
-        let token = await CreateToken({ authorid: req.user.id })
+        let token: string = await RecoverToken(req.user.id)
+        if (!token) {
+            token = await CreateToken({ authorid: req.user.id })
+        }
         res.json({
             token,
             authorid: req.user.id,

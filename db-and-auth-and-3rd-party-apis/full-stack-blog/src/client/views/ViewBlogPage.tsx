@@ -1,15 +1,20 @@
 import * as React from 'react'
 import { Link } from 'react-router-dom'
 import { RouteComponentProps, withRouter } from 'react-router'
-import Axios from 'axios'
+import * as moment from 'moment'
 
+import useLogin from '../utils/useLogin'
+import useSystemAlert from '../utils/useSystemAlert'
 import { BLOGS_API, join } from '../utils/apis'
-import TagBox from '../components/TagBox'
-import MarkDown from '../components/MarkDown'
+import TagBox from '../components/commons/TagBox'
+import MarkDown from '../components/commons/MarkDown'
 
 interface IViewBlogsPage extends RouteComponentProps<{ blogid: string }> { }
 
 const ViewBlogPage: React.FC<IViewBlogsPage> = ({ match, history }) => {
+
+    const { user, json } = useLogin()
+    const { pushAlert } = useSystemAlert()
 
     let id = parseInt(match.params.blogid)
     const [blog, setBlog] = React.useState<IBlog>({
@@ -25,10 +30,10 @@ const ViewBlogPage: React.FC<IViewBlogsPage> = ({ match, history }) => {
     React.useEffect(() => {
         (async () => {
             try {
-                let rawBlog = (await Axios.get<IBlog>(join(BLOGS_API, `${id}`))).data
+                let rawBlog = await json<IBlog>(join(BLOGS_API, `${id}`))
                 setBlog(rawBlog.tags ? { ...rawBlog, tagList: rawBlog.tags.split(';;') } : { ...rawBlog, tagList: [] })
             } catch (err) {
-                console.error(err)
+                pushAlert({ content: 'It seems this blog is being tricky. Please try again later when our servers are online.', type: 'danger' })
             }
         })()
     }, [id])
@@ -36,8 +41,8 @@ const ViewBlogPage: React.FC<IViewBlogsPage> = ({ match, history }) => {
     const handleDelete: React.MouseEventHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault()
         if (confirm('Are you sure you want to delete this blog post? There is no going back...')) {
-            Axios.delete(join(BLOGS_API, id.toString()))
-            history.push('/')
+            json(join(BLOGS_API, `${id}`), 'DELETE')
+                .then(() => history.push('/'))
         }
     }
 
@@ -46,11 +51,17 @@ const ViewBlogPage: React.FC<IViewBlogsPage> = ({ match, history }) => {
             <div className="col-12">
                 <article className="card my-5 shadow-lg rounded-lg">
                     <div className="card-header d-flex flex-column">
-                        <h3 className="card-title ml-5 mt-2">{blog.title}</h3>
+                        <div id="title" className="d-flex">
+                            <h3 className="card-title ml-5 mt-2">{blog.title}</h3>
+                            {user.authorid === blog.authorid && <small className="ml-2 align-self-center" style={{ fontSize: '1rem' }}>
+                                &mdash;
+                                <Link to={`/edit/${blog.id}`} className="ml-2">edit</Link>,
+                                <a onClick={handleDelete} className="ml-2" href="">delete</a>
+                            </small>}
+                        </div>
                         <small className="text-muted ml-auto mr-md-5">
-                            by {blog.authorName} &mdash;
-                            <Link to={`/edit/${blog.id}`} className="ml-2">edit</Link>,
-                            <a onClick={handleDelete} className="ml-2" href="">delete</a>
+                            by {blog.authorName}
+                            {blog._created ? ' — ' + moment(blog._created).format('D MMMM[,] YY') : ''}
                         </small>
                         <TagBox tags={blog.tagList} />
                     </div>
