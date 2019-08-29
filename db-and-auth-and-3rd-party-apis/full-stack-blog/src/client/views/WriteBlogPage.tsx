@@ -1,6 +1,6 @@
 import * as React from 'react'
 import Axios from 'axios'
-import { USERS_API, join, BLOGS_API } from '../utils/apis'
+import { AUTHORS_API, join, BLOGS_API } from '../utils/apis'
 import ViewBlog from '../components/ViewBlog'
 import { withRouter, RouteComponentProps } from 'react-router'
 import Form from '../components/Form'
@@ -39,7 +39,7 @@ const WriteBlogPage: React.FC<IWriteBlogPage> = ({ authorid, history, match }) =
     React.useEffect(() => {
         if (authorid) {
             (async () => {
-                setAuthor((await Axios.get<IAuthor>(join(USERS_API, `${authorid}`))).data)
+                setAuthor((await Axios.get<IAuthor>(join(AUTHORS_API, `${authorid}`))).data)
             })()
         }
     }, [authorid])
@@ -50,8 +50,8 @@ const WriteBlogPage: React.FC<IWriteBlogPage> = ({ authorid, history, match }) =
         }
         (async () => {
             try {
-                let blog = (await Axios.get<Blog>(join(BLOGS_API, blogid))).data
-                let author = (await Axios.get<IAuthor>(join(USERS_API, blog.authorid.toString()))).data
+                let blog = (await Axios.get<IBlog>(join(BLOGS_API, blogid))).data
+                let author = (await Axios.get<IAuthor>(join(AUTHORS_API, blog.authorid.toString()))).data
                 setAuthor(author)
                 setTitle(blog.title)
                 setContent(blog.content)

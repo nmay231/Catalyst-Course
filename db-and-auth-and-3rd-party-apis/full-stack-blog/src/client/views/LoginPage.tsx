@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { RouteComponentProps, withRouter } from 'react-router'
 import Axios from 'axios';
-import { USERS_API, join } from '../utils/apis';
+import { AUTHORS_API, join } from '../utils/apis';
 
 interface ILoginPage extends RouteComponentProps {
     setAuthorid: (...args: any[]) => any,
@@ -11,7 +11,7 @@ const LoginPage: React.FC<ILoginPage> = ({ setAuthorid, history }) => {
 
     const handleLogin: React.MouseEventHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault()
-        Axios.get(join(USERS_API, 'find-luke-lolololol'))
+        Axios.get(join(AUTHORS_API, 'find-luke-lolololol'))
             .then((res) => {
                 setAuthorid(res.data.id)
                 history.push('/')

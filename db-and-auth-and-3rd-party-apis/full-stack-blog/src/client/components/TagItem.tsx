@@ -2,8 +2,8 @@ import * as React from 'react'
 
 interface ITagItem {
     text: string,
-    click?: (...args: any[]) => any,
-    remove?: (...args: any[]) => any,
+    click?: (...args: any[]) => void,
+    remove?: (...args: any[]) => void,
 }
 
 const TagItem: React.FC<ITagItem> = ({ text, click, remove }) => {

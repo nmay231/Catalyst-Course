@@ -8,7 +8,7 @@ import WriteBlogPage from './views/WriteBlogPage'
 import ViewBlogPage from './views/ViewBlogPage'
 
 import Navigation from './components/Navigation'
-import { USERS_API, join } from './utils/apis'
+import { AUTHORS_API, join } from './utils/apis'
 
 const App: React.FC = () => {
 
@@ -19,7 +19,7 @@ const App: React.FC = () => {
             (async () => {
                 let localid: string = localStorage.getItem('authorid')
                 if (localid) {
-                    let final = (await Axios.get<IAuthor>(join(USERS_API, localid))).data.id
+                    let final = (await Axios.get<IAuthor>(join(AUTHORS_API, localid))).data.id
                     setAuthorid(final)
                 } else {
                     setAuthorid(-1)

@@ -2,14 +2,14 @@ import * as React from 'react'
 import { RouteComponentProps, withRouter } from 'react-router'
 
 
-interface FormProps extends RouteComponentProps {
+interface IFormProps extends RouteComponentProps {
     submitText: string,
-    action?: (...x: any[]) => any,
-    cancel?: (...x: any[]) => any,
+    action?: (...args: any[]) => void,
+    cancel?: (...args: any[]) => void,
     className?: string,
 }
 
-const Form: React.FC<FormProps> = ({ children, submitText, action, cancel, history, className }) => {
+const Form: React.FC<IFormProps> = ({ children, submitText, action, cancel, history, className }) => {
 
     if (!className) {
         className = 'col-lg-6 col-md-8 border rounded'

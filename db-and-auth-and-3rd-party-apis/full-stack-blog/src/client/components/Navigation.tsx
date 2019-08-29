@@ -2,7 +2,7 @@ import * as React from 'react'
 import { NavLink } from 'react-router-dom'
 
 
-const Navigation = () => {
+const Navigation: React.FC = () => {
     return (
         <nav className="navbar navbar-expand-lg navbar-dark bg-dark row">
             <NavLink to="/home" className="nav-item btn btn-dark my-1 mx-3"> Home </NavLink>
