@@ -22,13 +22,13 @@ const useSystemAlert = () => {
         }, 410)
     }
 
-    const pushAlert = (newAlert: ISystemAlert, delay: number | null = null) => {
+    const pushAlert = (newAlert: ISystemAlert, delayms: number | null = null) => {
         setId((prevId) => {
             setAlerts((prevAlerts: { [key: string]: ISystemAlert }) => {
-                if (delay) {
+                if (delayms) {
                     setTimeout(() => {
                         removeAlert(prevId)()
-                    }, delay)
+                    }, delayms)
                 }
                 return { ...prevAlerts, [prevId]: { ...newAlert, id: prevId, remove: removeAlert(prevId) } }
             })
