@@ -16,7 +16,7 @@ const Navigation: React.FC<INavigation> = ({ history }) => {
     }
 
     return (
-        <nav className="navbar navbar-expand-lg navbar-dark bg-dark row">
+        <nav className="navbar navbar-expand-lg navbar-dark bg-dark row w-100 ml-0">
             <NavLink to="/home" className="nav-item btn btn-dark my-1 mx-3"> Home </NavLink>
             {isLoggedIn ? <>
                 <NavLink to="/mytimeline" className="nav-item btn btn-dark my-1 mx-3"> My Timeline </NavLink>
