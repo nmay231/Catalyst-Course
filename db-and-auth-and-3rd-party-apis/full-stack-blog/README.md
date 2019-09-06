@@ -1,4 +1,13 @@
-# --------------- Original lab Requirements ---------------
+Different revisions:
+---
+
+1. [Original Requirements](#original-lab-requirements---commit-hash:-3f254a82e1ddbe8fcf69834fcc3869486b4f73ba)
+2. [Backend Auth](#backend-auth---da81138463e4568dbc69e351e1494754b0a2672f)
+3. [Frontend Auth](#frontend-auth---4f8bea66bd087f081d4dc563e1451f1ab1798494)
+4. [Stripe Integration](#stripe-integration---7e9dab8a0e8dd144a5b8d4b12f302cd99b64706d)
+5. [Mailgun Integration](#mailgun-integration---6035742b943d6115c1f3422499fbcbb94d49c656)
+
+# Original lab Requirements - commit hash: 3f254a82e1ddbe8fcf69834fcc3869486b4f73ba
 
 # Your Personal Blog
 The purpose of this lab is to make a your own personal blog .. full stack! You'll use everything you've learned from the Database lectures to make a schema, connect it to your Express server, write REST API Endpoints to get your data, and display it all using React. Let's crush it!
@@ -69,7 +78,7 @@ The all Blogs component should display previews of the blog posts that a user ca
 
 https://www.youtube.com/watch?v=Be8UZxPGyAY
 
-# --------------- Backend auth ---------------
+# Backend auth - da81138463e4568dbc69e351e1494754b0a2672f
 
 # Protect ~~This House~~ Your API
 The purpose of this lab is to protect your Blog API routes by adding back end authentication! You should be able to "login" by sending a `POST` request to a route in Postman. This login should create and send tokens on a successful response. After, you need to be able to protect certain routes on your API by requiring a valid auth token.
@@ -169,7 +178,7 @@ If all is coded, your completed back end authentication lab should be able to us
 
 https://www.youtube.com/watch?v=xqLg-nUn9Fg
 
-# --------------- Frontend auth ---------------
+# Frontend auth - 4f8bea66bd087f081d4dc563e1451f1ab1798494
 
 # Frontend Under Lock and Key Token
 The purpose of this lab is to protect your frontend components using the auth workflow we coded on the backend. We write a utility file to handle localStorage and extending the use of fetch to more reusable in our applications.
@@ -218,3 +227,31 @@ Make sure you have the following modules and their types installed:
 ### Demo
 
 https://www.youtube.com/watch?v=2xJZQs_ugWQ
+
+# Stripe Integration - 7e9dab8a0e8dd144a5b8d4b12f302cd99b64706d
+
+After reviewing the material, you should be able to use this knowledge and the boilerplate code to implement a donation form on your blog.
+
+You can choose which Stripe Elements to implement and how you want to style them. It is recommended to look at the several Stripe demos available on their GitHub projects and website.
+
+# Mailgun Integration - 6035742b943d6115c1f3422499fbcbb94d49c656
+
+# Spam Some Emails to Yourself
+The goal of this lab is to integrate a 3rd Party API into your code! It's fairly straightforward, and most problems can be solved by following the API's documentation, the walkthroughs, or the reference! Let's start spamming!
+
+## Steps
+### Backend
+* Sign up for a Mailgun Account.
+* Get a sandbox domain and api key.
+* Install the necessary module and typings.
+* Establish your connection with Mailgun.
+* Code a sendEmail function.
+* Code a route to send an email using that function.
+* Test the route in POSTMAN to confirm it works.
+
+### Frontend
+* Adjust your route to accept an email, subject, and message from the request body.
+* Create a form in a React component with 3 inputs that match up with the above 3 parameters.
+* Make sure they're controlled inputs that properly set state and are safely typed.
+* Make your form perform an onSubmit event that makes a POST request to your endpoint.
+* Make sure you received an email from your contact form.
