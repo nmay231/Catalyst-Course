@@ -2,7 +2,7 @@ import * as React from 'react'
 import Axios from 'axios'
 import { Method } from 'axios'
 import { LoginContext } from '../components/context/LoginContext'
-import { LOGIN_ENDPOINT, REGISTER_ENDPOINT } from './apis'
+import { LOGIN_ENDPOINT, REGISTER_ENDPOINT, unauthedJson } from './apis'
 
 const useLogin = () => {
 
@@ -46,20 +46,11 @@ const useLogin = () => {
         }
     }
 
-    const json = async <T>(url: string, method: Method = 'GET', body?: {}, headers?: { [key: string]: any }): Promise<T> => {
+    const json = async <T>(url: string, method: Method = 'GET', body?: {}, headers?: {}): Promise<T> => {
         if (user && user.token) {
             headers = { ...(headers || {}), 'Authorization': `Bearer ${user.token}` }
         }
-        let result: any = (await Axios.request({
-            url,
-            method,
-            data: body,
-            headers,
-        })).data
-
-        if (method === 'GET' && result) {
-            return result
-        }
+        return unauthedJson<T>(url, method, body, headers)
     }
 
     return {

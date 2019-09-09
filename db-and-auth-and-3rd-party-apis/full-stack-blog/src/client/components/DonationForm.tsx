@@ -1,9 +1,8 @@
 import * as React from 'react'
 import {CardElement, injectStripe, ReactStripeElements} from 'react-stripe-elements'
 
-import useLogin from '../utils/useLogin'
 import useSystemAlert from '../utils/useSystemAlert'
-import { DONATIONS_API } from '../utils/apis'
+import { DONATIONS_API, unauthedJson } from '../utils/apis'
 import Form from './commons/Form'
 import FormField from './commons/FormField'
 
@@ -11,7 +10,6 @@ interface IDonationForm extends ReactStripeElements.InjectedStripeProps {}
 
 const DonationForm: React.FC<IDonationForm> = ({stripe}) => {
 
-    const {json} = useLogin()
     const {pushAlert} = useSystemAlert()
 
     const amounts = [1, 5, 10, 20, 50]
@@ -35,8 +33,7 @@ const DonationForm: React.FC<IDonationForm> = ({stripe}) => {
             return pushAlert({content: 'Please double check your card information', type: 'warning'}, 5000)
         }
         try {
-            // console.log(token, amount, name)
-            await json(DONATIONS_API, 'POST', {tokenid: token.id, amount, name})
+            await unauthedJson(DONATIONS_API, 'POST', {tokenid: token.id, amount, name})
             pushAlert({content: '❤ Thank you so much for your financial support! ❤'}, 20000)
         } catch (err) {
             console.log(err)
