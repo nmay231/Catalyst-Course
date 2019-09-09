@@ -1,3 +1,5 @@
+/** @format */
+
 import * as stripeLoader from 'stripe'
 
 const stripe = new stripeLoader(process.env.STRIPE_SK)

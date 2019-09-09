@@ -1,3 +1,5 @@
+/** @format */
+
 import * as bcrypt from 'bcrypt'
 
 export const ComparePassword = (password: string, hash: string) => {

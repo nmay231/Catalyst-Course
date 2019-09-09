@@ -1,12 +1,13 @@
+/** @format */
+
 import * as React from 'react'
 
 interface IBottom {
     // footer: Promise<JSX.Element>,
-    footerid: string,
+    footerid: string
 }
 
-const Bottom: React.FC<IBottom> = ({children, footerid}) => {
-
+const Bottom: React.FC<IBottom> = ({ children, footerid }) => {
     const [marginBottom, setMarginBottom] = React.useState(0)
 
     const onEntry: IntersectionObserverCallback = (entry) => {
@@ -15,7 +16,9 @@ const Bottom: React.FC<IBottom> = ({children, footerid}) => {
         }
     }
 
-    const intersectionObserver = new IntersectionObserver(onEntry, {threshold: [0, .33, .67, 1]})
+    const intersectionObserver = new IntersectionObserver(onEntry, {
+        threshold: [0, 0.33, 0.67, 1],
+    })
 
     const mutationObserver = new MutationObserver((mutations, observer) => {
         for (let mut of mutations) {
@@ -29,7 +32,7 @@ const Bottom: React.FC<IBottom> = ({children, footerid}) => {
         }
     })
 
-    mutationObserver.observe(document.body, {childList: true})
+    mutationObserver.observe(document.body, { childList: true })
 
     const styles = {
         marginBottom,

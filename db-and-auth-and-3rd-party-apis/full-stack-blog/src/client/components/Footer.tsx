@@ -1,11 +1,13 @@
+/** @format */
+
 import * as React from 'react'
 import { NavLink } from 'react-router-dom'
 
 interface IFooter {
-    id: string,
+    id: string
 }
 
-const Footer: React.FC<IFooter> = ({id}) => {
+const Footer: React.FC<IFooter> = ({ id }) => {
     return (
         <footer className="footer mt-auto py-3 bg-dark" id={id}>
             <section className="row d-flex w-100 justify-content-center">

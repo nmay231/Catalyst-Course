@@ -1,3 +1,5 @@
+/** @format */
+
 import * as crypto from 'crypto'
 import * as jwt from 'jsonwebtoken'
 import * as moment from 'moment'
@@ -9,14 +11,20 @@ export const CreateToken = async (payload: IPayload) => {
     let [tokenid] = await knextion('tokens').insert<number[]>({ authorid: payload.authorid })
     payload.tokenid = tokenid
     payload.unique = crypto.randomBytes(32).toString('hex')
-    payload.expires = moment(Date.now()).add(7, 'days').toDate()
+    payload.expires = moment(Date.now())
+        .add(7, 'days')
+        .toDate()
     let token = await jwt.sign(payload, process.env.AUTH_SECRET)
-    await knextion('tokens').update({ token, expires: payload.expires }).where({ authorid: payload.authorid })
+    await knextion('tokens')
+        .update({ token, expires: payload.expires })
+        .where({ authorid: payload.authorid })
     return token
 }
 
 export const RecoverToken = async (authorid: number) => {
-    let [tokenRow] = await knextion('tokens').where({ authorid }).select<{ token: string, expires: Date }[]>()
+    let [tokenRow] = await knextion('tokens')
+        .where({ authorid })
+        .select<{ token: string; expires: Date }[]>()
     let payload: IPayload
 
     try {
@@ -26,12 +34,15 @@ export const RecoverToken = async (authorid: number) => {
     }
 
     if (moment(payload.expires).isAfter(Date.now())) {
-        payload.expires = moment(Date.now()).add(7, 'days').toDate()
+        payload.expires = moment(Date.now())
+            .add(7, 'days')
+            .toDate()
         let token = await jwt.sign(payload, process.env.AUTH_SECRET)
-        await knextion('tokens').update({ token, expires: payload.expires }).where({ authorid })
+        await knextion('tokens')
+            .update({ token, expires: payload.expires })
+            .where({ authorid })
         return token
     }
-
 }
 
 export const ValidateToken = async (token: string) => {
@@ -39,7 +50,9 @@ export const ValidateToken = async (token: string) => {
     if (!payload) {
         throw new Error('Invalid token!')
     }
-    let [tokenid] = await knextion('tokens').where({ id: payload.tokenid }).select<number[]>()
+    let [tokenid] = await knextion('tokens')
+        .where({ id: payload.tokenid })
+        .select<number[]>()
     if (!tokenid) {
         throw new Error('Invalid token!')
     } else {

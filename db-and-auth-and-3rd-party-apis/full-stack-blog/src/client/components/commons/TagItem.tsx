@@ -1,13 +1,14 @@
+/** @format */
+
 import * as React from 'react'
 
 interface ITagItem {
-    text: string,
-    click?: (...args: any[]) => void,
-    remove?: (...args: any[]) => void,
+    text: string
+    click?: (...args: any[]) => void
+    remove?: (...args: any[]) => void
 }
 
 const TagItem: React.FC<ITagItem> = ({ text, click, remove }) => {
-
     const handleClick: React.MouseEventHandler = (e: React.MouseEvent<HTMLSpanElement>) => {
         click()
     }
@@ -16,12 +17,21 @@ const TagItem: React.FC<ITagItem> = ({ text, click, remove }) => {
         cursor: 'pointer',
     }
 
-    click = click || (() => { })
+    click = click || (() => {})
 
     return (
-        <span className="px-3 py-1 mx-2 my-1 text-nowrap border border-dark rounded-pill bg-light" style={hover} onClick={handleClick}>
+        <span
+            className="px-3 py-1 mx-2 my-1 text-nowrap border border-dark rounded-pill bg-light"
+            style={hover}
+            onClick={handleClick}
+        >
             {text}
-            {remove && <span className="ml-1 mr-n1" onClick={remove} style={{ cursor: 'pointer' }}> &times; </span>}
+            {remove && (
+                <span className="ml-1 mr-n1" onClick={remove} style={{ cursor: 'pointer' }}>
+                    {' '}
+                    &times;{' '}
+                </span>
+            )}
         </span>
     )
 }

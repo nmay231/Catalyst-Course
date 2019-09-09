@@ -1,5 +1,7 @@
+/** @format */
+
 import * as React from 'react'
-import {StripeProvider, Elements} from 'react-stripe-elements'
+import { StripeProvider, Elements } from 'react-stripe-elements'
 
 import DonationForm from '../components/DonationForm'
 

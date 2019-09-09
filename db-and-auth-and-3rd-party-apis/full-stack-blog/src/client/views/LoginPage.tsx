@@ -1,3 +1,5 @@
+/** @format */
+
 import * as React from 'react'
 import { RouteComponentProps, withRouter } from 'react-router'
 
@@ -7,11 +9,10 @@ import Form from '../components/commons/Form'
 import FormField from '../components/commons/FormField'
 
 interface ILoginPage extends RouteComponentProps {
-    registering?: boolean,
+    registering?: boolean
 }
 
 const LoginPage: React.FC<ILoginPage> = ({ history, registering }) => {
-
     const { loginLocal, register } = useLogin()
     const { pushAlert } = useSystemAlert()
 
@@ -21,29 +22,35 @@ const LoginPage: React.FC<ILoginPage> = ({ history, registering }) => {
     const [password, setPassword] = React.useState('')
     const [confirmPassword, setConfirmPassword] = React.useState('')
 
-
     const handleLogin = () => {
         if (!registering) {
-            loginLocal(email, password)
-                .then(success => {
-                    if (success) {
-                        history.push('/')
-                    } else {
-                        pushAlert({ content: 'Our jabberwocky didn\'t like your credentials. Please try again.', type: 'warning' })
-                    }
-                })
+            loginLocal(email, password).then((success) => {
+                if (success) {
+                    history.push('/')
+                } else {
+                    pushAlert({
+                        content: "Our jabberwocky didn't like your credentials. Please try again.",
+                        type: 'warning',
+                    })
+                }
+            })
         } else {
             if (password !== confirmPassword) {
-                pushAlert({ content: 'We can\'t read your mind. Doublecheck your passwords are the same.', type: 'warning' })
-            }
-            register(firstName + ' ' + lastName, email, password)
-                .then(success => {
-                    if (success) {
-                        history.push('/writeblog')
-                    } else {
-                        pushAlert({ content: 'Our jabberwocky didn\'t like your credentials. Please try again.', type: 'warning' })
-                    }
+                pushAlert({
+                    content: "We can't read your mind. Doublecheck your passwords are the same.",
+                    type: 'warning',
                 })
+            }
+            register(firstName + ' ' + lastName, email, password).then((success) => {
+                if (success) {
+                    history.push('/writeblog')
+                } else {
+                    pushAlert({
+                        content: "Our jabberwocky didn't like your credentials. Please try again.",
+                        type: 'warning',
+                    })
+                }
+            })
         }
     }
 
@@ -57,17 +64,27 @@ const LoginPage: React.FC<ILoginPage> = ({ history, registering }) => {
 
     return (
         <section className="row d-flex">
-            <Form submitText={registering ? 'Register' : 'Login'} action={handleLogin} className="col-6 border rounded shadow-lg mt-5 mx-auto">
-                {registering && <>
-                    <FormField state={[firstName, setFirstName]} name="First Name" />
-                    <FormField state={[lastName, setLastName]} name="Last Name" />
-                    <hr />
-                </>}
+            <Form
+                submitText={registering ? 'Register' : 'Login'}
+                action={handleLogin}
+                className="col-6 border rounded shadow-lg mt-5 mx-auto"
+            >
+                {registering && (
+                    <>
+                        <FormField state={[firstName, setFirstName]} name="First Name" />
+                        <FormField state={[lastName, setLastName]} name="Last Name" />
+                        <hr />
+                    </>
+                )}
                 <FormField state={[email, setEmail]} name="Email" />
                 <FormField state={[password, setPassword]} name="Password" type="password" />
-                {registering &&
-                    <FormField state={[confirmPassword, setConfirmPassword]} name="Confirm Password" type="password" />
-                }
+                {registering && (
+                    <FormField
+                        state={[confirmPassword, setConfirmPassword]}
+                        name="Confirm Password"
+                        type="password"
+                    />
+                )}
             </Form>
         </section>
     )

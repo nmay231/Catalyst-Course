@@ -1,3 +1,5 @@
+/** @format */
+
 import { Router } from 'express'
 
 import knextion from '../../db'
@@ -12,7 +14,9 @@ router.use(BearerStrategy())
 // This will get removed in the next section :(
 router.get('/find-luke-lolololol', async (req, res) => {
     try {
-        let allLukes = await knextion('authors').where('name', '=', 'Luke Skywalker').select()
+        let allLukes = await knextion('authors')
+            .where('name', '=', 'Luke Skywalker')
+            .select()
         console.log(allLukes)
         if (allLukes.length) {
             res.status(200).json(allLukes[0])
@@ -21,7 +25,11 @@ router.get('/find-luke-lolololol', async (req, res) => {
                 name: 'Luke Skywalker',
                 email: 'lkskywalker@jediacademy.edu',
             })
-            res.status(200).json((await knextion('authors').where({ id }).select())[0])
+            res.status(200).json(
+                (await knextion('authors')
+                    .where({ id })
+                    .select())[0],
+            )
         }
     } catch (err) {
         console.error(err)
@@ -36,12 +44,14 @@ router.get('/:id?', isUser, async (req, res) => {
     }
     try {
         if (id) {
-            let [author] = await knextion('authors').where({ id }).select<IAuthor[]>()
+            let [author] = await knextion('authors')
+                .where({ id })
+                .select<IAuthor[]>()
             delete author.hash
             res.status(200).json(author)
         } else {
             let authors = await knextion('authors').select<IAuthor[]>()
-            res.status(200).json(authors.map(a => ({ ...a, hash: undefined })))
+            res.status(200).json(authors.map((a) => ({ ...a, hash: undefined })))
         }
     } catch (err) {
         console.error(err)
@@ -50,7 +60,7 @@ router.get('/:id?', isUser, async (req, res) => {
 })
 
 router.post('/', async (req, res) => {
-    let { name, email }: { name: string, email: string } = req.body
+    let { name, email }: { name: string; email: string } = req.body
     if (!name || !email) {
         return res.status(422).json('Missing `name` or `email` in body')
     }
@@ -64,7 +74,7 @@ router.post('/', async (req, res) => {
 })
 
 router.put('/:id', isUser, async (req, res) => {
-    let { name, email }: { name: string, email: string } = req.body
+    let { name, email }: { name: string; email: string } = req.body
     if (!name && !email) {
         return res.status(422).json('Missing `name` or `email` in body')
     }
@@ -73,7 +83,9 @@ router.put('/:id', isUser, async (req, res) => {
         return res.status(422).json('Invalid `id`')
     }
     try {
-        await knextion('authors').where({ id }).update({ name, email })
+        await knextion('authors')
+            .where({ id })
+            .update({ name, email })
         res.sendStatus(200)
     } catch (err) {
         console.error(err)
@@ -87,11 +99,19 @@ router.delete('/:id', isAdmin, async (req, res) => {
         return res.status(422).json('Invalid `id`')
     }
     try {
-        await knextion('blogs_tags').join('blogs', { 'blogs.authorid': id })
-            .where('blogs_tags.blogid', '=', 'blogs.id').del()
-        await knextion('blogs').where({ authorid: id }).del()
-        await knextion('tokens').where({ authorid: id }).del()
-        await knextion('authors').where({ id }).del()
+        await knextion('blogs_tags')
+            .join('blogs', { 'blogs.authorid': id })
+            .where('blogs_tags.blogid', '=', 'blogs.id')
+            .del()
+        await knextion('blogs')
+            .where({ authorid: id })
+            .del()
+        await knextion('tokens')
+            .where({ authorid: id })
+            .del()
+        await knextion('authors')
+            .where({ id })
+            .del()
         res.sendStatus(200)
     } catch (err) {
         console.error(err)

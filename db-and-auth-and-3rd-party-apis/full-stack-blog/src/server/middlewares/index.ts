@@ -1,3 +1,5 @@
+/** @format */
+
 import * as passport from 'passport'
 import './bearerstrategy'
 import './localstrategy'

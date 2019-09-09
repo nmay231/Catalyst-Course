@@ -1,3 +1,5 @@
+/** @format */
+
 import * as React from 'react'
 import { BrowserRouter as Router, Route, Redirect, Switch, Link } from 'react-router-dom'
 
@@ -17,7 +19,6 @@ import Footer from './components/Footer'
 import Bottom from './components/Bottom'
 
 const App: React.FC = () => {
-
     let footerid = 'footer-id'
 
     return (
@@ -28,12 +29,15 @@ const App: React.FC = () => {
                     {/* The <Bottom> component must be rendered first to allow the donate button to be clicked
                         but the main screen to be in front of the `div.fixed-bottom` */}
                     <Bottom footerid={footerid}>
-                        <Link to="/donate" id="donate-button"
-                            className="btn btn-info ml-auto rounded-pill mr-md-5 mb-md-5 mr-2 mb-3 position-relative">
-                                Donate!
+                        <Link
+                            to="/donate"
+                            id="donate-button"
+                            className="btn btn-info ml-auto rounded-pill mr-md-5 mb-md-5 mr-2 mb-3 position-relative"
+                        >
+                            Donate!
                         </Link>
                     </Bottom>
-                    <main role="main" className="d-flex flex-column h-100" style={{zIndex: -2}}>
+                    <main role="main" className="d-flex flex-column h-100" style={{ zIndex: -2 }}>
                         <Navigation />
                         <div className="container">
                             <AlertContainer />
@@ -42,7 +46,10 @@ const App: React.FC = () => {
                                 <Route path="/home" component={HomePage} />
                                 <Route path="/mytimeline" component={MyTimelinePage} />
                                 <Route path="/login" component={LoginPage} />
-                                <Route path="/register" component={() => <LoginPage registering />} />
+                                <Route
+                                    path="/register"
+                                    component={() => <LoginPage registering />}
+                                />
                                 {/* Blogs */}
                                 <Route path="/view/:blogid" component={ViewBlogPage} />
                                 <Route path="/edit/:blogid" component={WriteBlogPage} />

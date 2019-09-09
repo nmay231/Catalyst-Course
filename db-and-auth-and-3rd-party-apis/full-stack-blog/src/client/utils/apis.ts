@@ -1,7 +1,8 @@
+/** @format */
+
 import * as path from 'path'
 import Axios from 'axios'
-import {Method} from 'axios'
-
+import { Method } from 'axios'
 
 export const BLOGS_API = '/api/blogs'
 export const TAGS_API = '/api/tags'
@@ -16,7 +17,12 @@ export function join(...paths: string[]) {
     return path.join(...paths)
 }
 
-export const unauthedJson = async <T>(url: string, method: Method = 'GET', body?: {}, headers?: {}): Promise<T> => {
+export const unauthedJson = async <T>(
+    url: string,
+    method: Method = 'GET',
+    body?: {},
+    headers?: {},
+): Promise<T> => {
     headers = { ...(headers || {}) }
     let result: any = (await Axios.request({
         url,
@@ -25,7 +31,7 @@ export const unauthedJson = async <T>(url: string, method: Method = 'GET', body?
         headers,
     })).data
 
-    if ((method === 'GET' || method ===  'get') && result) {
+    if ((method === 'GET' || method === 'get') && result) {
         return result
     }
 }

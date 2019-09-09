@@ -1,3 +1,5 @@
+/** @format */
+
 import * as React from 'react'
 import { withRouter, RouteComponentProps } from 'react-router'
 import * as _ from 'lodash'
@@ -11,10 +13,9 @@ import Form from '../components/commons/Form'
 import FormField from '../components/commons/FormField'
 import SearchTag from '../components/SearchTag'
 
-interface IWriteBlogPage extends RouteComponentProps<{ blogid?: string }> { }
+interface IWriteBlogPage extends RouteComponentProps<{ blogid?: string }> {}
 
 const WriteBlogPage: React.FC<IWriteBlogPage> = ({ history, match }) => {
-
     const { user, json } = useLogin()
     const { pushAlert } = useSystemAlert()
 
@@ -41,12 +42,12 @@ const WriteBlogPage: React.FC<IWriteBlogPage> = ({ history, match }) => {
         if (!user.authorid || user.authorid === -1) {
             return
         } else if (!blogid) {
-            (async () => {
+            ;(async () => {
                 let author = await json<IAuthor>(join(AUTHORS_API, `${user.authorid}`))
                 setAuthorName(author.name)
             })()
         } else {
-            (async () => {
+            ;(async () => {
                 try {
                     let blog = await json<IBlog>(join(BLOGS_API, `${blogid}`))
                     if (blog.authorid !== user.authorid) {
@@ -57,7 +58,11 @@ const WriteBlogPage: React.FC<IWriteBlogPage> = ({ history, match }) => {
                     setContent(blog.content)
                     setTagList(blog.tags.split(';;'))
                 } catch (err) {
-                    pushAlert({ content: 'It seems we are having difficulties communicating with the server deities. Please try again later.', type: 'danger' })
+                    pushAlert({
+                        content:
+                            'It seems we are having difficulties communicating with the server deities. Please try again later.',
+                        type: 'danger',
+                    })
                 }
             })()
         }
@@ -71,19 +76,19 @@ const WriteBlogPage: React.FC<IWriteBlogPage> = ({ history, match }) => {
                 let blog = await json<IBlog>(join(BLOGS_API, `${blogid}`))
                 let oldTags = blog.tags.split(';;')
                 if (!_.isEqual(tagList.sort(), oldTags.sort())) {
-                    await json(join(BLOGS_API, `${blogid}`, 'removetags'), 'PUT',
-                        { tags: oldTags }
-                    )
-                    await json(join(BLOGS_API, `${blogid}`, 'addtags'), 'PUT',
-                        { tags: tagList }
-                    )
+                    await json(join(BLOGS_API, `${blogid}`, 'removetags'), 'PUT', { tags: oldTags })
+                    await json(join(BLOGS_API, `${blogid}`, 'addtags'), 'PUT', { tags: tagList })
                 }
             } else {
                 await json(BLOGS_API, 'POST', { ...body, tags: tagList })
             }
             history.push('/')
         } catch (err) {
-            pushAlert({ content: 'Our servers couldn\'t handle your blog\'s greatness. Please try again later.', type: 'danger' })
+            pushAlert({
+                content:
+                    "Our servers couldn't handle your blog's greatness. Please try again later.",
+                type: 'danger',
+            })
         }
     }
 
@@ -97,15 +102,28 @@ const WriteBlogPage: React.FC<IWriteBlogPage> = ({ history, match }) => {
 
     return (
         <section className="row d-flex mt-5">
-            <Form submitText="Post Blog" action={postBlog}
-                className="col-lg-6 col-12 border rounded mx-auto mt-2 mb-n1" >
+            <Form
+                submitText="Post Blog"
+                action={postBlog}
+                className="col-lg-6 col-12 border rounded mx-auto mt-2 mb-n1"
+            >
                 <FormField state={[title, setTitle]} name="Title" />
                 <SearchTag state={[tagList, setTagList]} hidden />
                 <FormField state={[content, setContent]} name="Post Content" type="textarea" />
             </Form>
-            <ViewBlog blog={{ id: null, tags: null, authorid: user.authorid, authorName: authorName || '...', title, content, tagList }}
+            <ViewBlog
+                blog={{
+                    id: null,
+                    tags: null,
+                    authorid: user.authorid,
+                    authorName: authorName || '...',
+                    title,
+                    content,
+                    tagList,
+                }}
                 preview={false}
-                className="col-lg-6 col-12" />
+                className="col-lg-6 col-12"
+            />
         </section>
     )
 }

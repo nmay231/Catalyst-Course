@@ -1,3 +1,5 @@
+/** @format */
+
 import * as React from 'react'
 
 import { Converter } from 'showdown'
@@ -10,16 +12,12 @@ const converter = new Converter({
 })
 
 interface IMarkDown {
-    content: string,
-    className?: string,
+    content: string
+    className?: string
 }
 
 const MarkDown: React.FC<IMarkDown> = ({ content, className = '' }) => {
-    return (
-        <div className={className}>
-            {ReactHTMLParser(converter.makeHtml(content))}
-        </div>
-    )
+    return <div className={className}>{ReactHTMLParser(converter.makeHtml(content))}</div>
 }
 
 export default MarkDown

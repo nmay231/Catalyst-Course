@@ -1,8 +1,10 @@
+/** @format */
+
 import { Router } from 'express'
 
 import { HashPassword } from '../../utils/security/passwords'
 import knextion from '../../db'
-import { CreateToken } from '../../utils/security/tokens';
+import { CreateToken } from '../../utils/security/tokens'
 
 const router = Router()
 
@@ -15,7 +17,7 @@ router.post('/', async (req, res) => {
         let [authorid] = await knextion('authors').insert<number[]>({
             email: body.email,
             hash: HashPassword(body.password),
-            name: body.name
+            name: body.name,
         })
         let token = await CreateToken({ authorid })
         res.json({

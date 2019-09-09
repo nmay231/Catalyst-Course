@@ -1,3 +1,5 @@
+/** @format */
+
 import * as React from 'react'
 import * as _ from 'lodash'
 
@@ -14,15 +16,20 @@ const HomePage: React.FC = () => {
     const { pushAlert } = useSystemAlert()
 
     React.useEffect(() => {
-        (async () => {
+        ;(async () => {
             try {
                 let rawBlogs: IBlog[] = await json<IBlog[]>(BLOGS_API)
-                setBlogs(rawBlogs.map(b => ({
-                    ...b,
-                    tagList: b.tags ? b.tags.split(';;') : [],
-                })))
+                setBlogs(
+                    rawBlogs.map((b) => ({
+                        ...b,
+                        tagList: b.tags ? b.tags.split(';;') : [],
+                    })),
+                )
             } catch (err) {
-                pushAlert({ content: 'It seems we are having difficulties connecting to our servers...', type: 'danger' })
+                pushAlert({
+                    content: 'It seems we are having difficulties connecting to our servers...',
+                    type: 'danger',
+                })
             }
         })()
     }, [])

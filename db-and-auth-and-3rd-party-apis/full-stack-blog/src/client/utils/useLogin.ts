@@ -1,3 +1,5 @@
+/** @format */
+
 import * as React from 'react'
 import Axios from 'axios'
 import { Method } from 'axios'
@@ -5,7 +7,6 @@ import { LoginContext } from '../components/context/LoginContext'
 import { LOGIN_ENDPOINT, REGISTER_ENDPOINT, unauthedJson } from './apis'
 
 const useLogin = () => {
-
     const [user, setUser] = React.useContext(LoginContext)
 
     const logout = () => {
@@ -46,9 +47,14 @@ const useLogin = () => {
         }
     }
 
-    const json = async <T>(url: string, method: Method = 'GET', body?: {}, headers?: {}): Promise<T> => {
+    const json = async <T>(
+        url: string,
+        method: Method = 'GET',
+        body?: {},
+        headers?: {},
+    ): Promise<T> => {
         if (user && user.token) {
-            headers = { ...(headers || {}), 'Authorization': `Bearer ${user.token}` }
+            headers = { ...(headers || {}), Authorization: `Bearer ${user.token}` }
         }
         return unauthedJson<T>(url, method, body, headers)
     }

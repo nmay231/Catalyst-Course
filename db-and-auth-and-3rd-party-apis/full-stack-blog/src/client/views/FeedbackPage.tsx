@@ -1,3 +1,5 @@
+/** @format */
+
 import * as React from 'react'
 import { withRouter, RouteComponentProps } from 'react-router'
 
@@ -9,10 +11,9 @@ import FormField from '../components/commons/FormField'
 
 interface IFeedbackPage extends RouteComponentProps {}
 
-const FeedbackPage: React.FC<IFeedbackPage> = ({history}) => {
-
-    const {json, isLoggedIn} = useLogin()
-    const {pushAlert} = useSystemAlert()
+const FeedbackPage: React.FC<IFeedbackPage> = ({ history }) => {
+    const { json, isLoggedIn } = useLogin()
+    const { pushAlert } = useSystemAlert()
 
     const [name, setName] = React.useState('')
     const [email, setEmail] = React.useState('')
@@ -20,7 +21,7 @@ const FeedbackPage: React.FC<IFeedbackPage> = ({history}) => {
     const [content, setContent] = React.useState('')
 
     if (!isLoggedIn) {
-        pushAlert({content: 'Please log in to send us feedback.'}, 5000)
+        pushAlert({ content: 'Please log in to send us feedback.' }, 5000)
         history.push('/login')
         return <></>
     }
@@ -31,9 +32,12 @@ const FeedbackPage: React.FC<IFeedbackPage> = ({history}) => {
 
     const handleForm = async () => {
         if (!name.length || !email.length || !subject.length || !content.length) {
-            return pushAlert({content: 'Please double check all your fields are filled out.', type: 'warning'}, 7000)
+            return pushAlert(
+                { content: 'Please double check all your fields are filled out.', type: 'warning' },
+                7000,
+            )
         }
-        try{
+        try {
             await json(join(FEEDBACK_API, 'spam-me'), 'POST', {
                 from: `${name} <${email}>`,
                 subject,
@@ -41,19 +45,30 @@ const FeedbackPage: React.FC<IFeedbackPage> = ({history}) => {
                 hasHtml: false,
             })
         } catch (err) {
-            pushAlert({content: 'Sorry, we are having issues with getting your feedback. Please try again later.', type: 'danger'}, 7000)
+            pushAlert(
+                {
+                    content:
+                        'Sorry, we are having issues with getting your feedback. Please try again later.',
+                    type: 'danger',
+                },
+                7000,
+            )
         }
-        pushAlert({content: 'Thanks for your feedback!'}, 5000)
+        pushAlert({ content: 'Thanks for your feedback!' }, 5000)
         history.push('/')
     }
 
     return (
         <section className="row">
-            <Form submitText="Send feedback" action={handleForm} className="mt-5 mb-4 col-xl-8 col-lg-10 mx-auto border rounded-lg shadow">
+            <Form
+                submitText="Send feedback"
+                action={handleForm}
+                className="mt-5 mb-4 col-xl-8 col-lg-10 mx-auto border rounded-lg shadow"
+            >
                 <FormField name="Name" state={[name, setName]} />
                 <FormField name="Email" state={[email, setEmail]} />
                 <FormField name="Subject" state={[subject, setSubject]} />
-                <FormField name="Content" state={[content, setContent]} type='textarea' />
+                <FormField name="Content" state={[content, setContent]} type="textarea" />
             </Form>
         </section>
     )

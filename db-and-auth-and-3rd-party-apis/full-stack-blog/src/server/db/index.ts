@@ -1,3 +1,5 @@
+/** @format */
+
 import * as knex from 'knex'
 
 // Fine, I relent on the bad punny name
