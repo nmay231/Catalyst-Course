@@ -1,10 +1,11 @@
 import {Router} from 'express'
 
+import {isUser} from '../../middlewares/authCheckpoints'
 import {sendEmail} from '../../utils/apis/mailgun'
 
 const router = Router()
 
-router.post('/spam-me', (req, res) => {
+router.post('/spam-me', isUser, (req, res) => {
     try{
         let {from, subject, content, hasHtml}:
             {from: string, subject: string, content: string, hasHtml: boolean} = req.body

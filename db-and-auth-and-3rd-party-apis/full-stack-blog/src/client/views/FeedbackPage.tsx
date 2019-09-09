@@ -11,13 +11,19 @@ interface IFeedbackPage extends RouteComponentProps {}
 
 const FeedbackPage: React.FC<IFeedbackPage> = ({history}) => {
 
-    const {json} = useLogin()
+    const {json, isLoggedIn} = useLogin()
     const {pushAlert} = useSystemAlert()
 
     const [name, setName] = React.useState('')
     const [email, setEmail] = React.useState('')
     const [subject, setSubject] = React.useState('')
     const [content, setContent] = React.useState('')
+
+    if (!isLoggedIn) {
+        pushAlert({content: 'Please log in to send us feedback.'}, 5000)
+        history.push('/login')
+        return <></>
+    }
 
     React.useEffect(() => {
         document.getElementById('Name').focus()
